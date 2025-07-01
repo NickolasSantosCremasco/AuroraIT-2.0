@@ -37,38 +37,31 @@ if ($nivel == 1) {
 </head>
 
 <!-- Modal para Agendar Consulta -->
-<div class="modal fade" id="modalAgendarConsulta" tabindex="-1" aria-labelledby="modalAgendarLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgendarServico" tabindex="-1" aria-labelledby="modalAgendarLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content rounded-4">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAgendarLabel"><i class="fas fa-plus me-2"></i>Agendar Consulta</h5>
+                <h5 class="modal-title" id="modalAgendarLabel"><i class="fas fa-plus me-2"></i>Agendar Servico</h5>
 
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="formAgendamento" method="post" action="../database/criarConsultas.php">
+                <form id="formAgendamento" method="post" action="../database/criarServico.php">
                     <div class="mb-3">
-                        <label for="tipoTerapia" class="form-label">Tipo de Terapia</label>
-                        <select class="form-select" name="tipoTerapia" id="tipoTerapia" required>
+                        <label for="tipoServico" class="form-label">Tipo de Servico</label>
+                        <select class="form-select" name="tipoServico" id="tipoServico" required>
                             <option value="">Selecione uma opção</option>
-                            <option value="Terapia Energética">Terapia Grupal</option>
-                            <option value="Massagem Terapêutica">Hipnose Terapêutica</option>
-                            <option value="Auriculoterapia">Sentimentos Sabotadores</option>
+                            <option value="Plano Básico">Plano Básico</option>
+                            <option value="Plano Intermediário">Plano Intermediário</option>
+                            <option value="PlanoAvancado">Plano Avançado</option>
                             <!-- Adicione mais conforme necessário -->
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="dataHora" class="form-label">Data e Hora</label>
-                        <input type="datetime-local" class="form-control" name="dataHora" id="dataHora" required>
+                        <label for="dataTermino" class="form-label">Data Término</label>
+                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="local" class="form-label">Local</label>
-                        <select class="form-select" name="local" id="local" required>
-                            <option value="">Selecione</option>
-                            <option value="Online (Google Meet)">Online (Google Meet)</option>
-                            <option value="Studio Leka Sarandy">Online (Zoom)</option>
-                        </select>
-                    </div>
+
                     <input type="hidden" name="usuario_id" id="usuarioSelecionadoId">
                     <button type="submit" class="btn btn-vinho w-100">
                         <i class="fas fa-check me-1"></i> Confirmar Agendamento
@@ -168,7 +161,6 @@ if ($nivel == 1) {
                     <a class="nav-link text-white active bg-opacity-25 bg-white rounded mb-2" href="#">🏠 Inicial</a>
                     <a class="nav-link text-white bg-danger bg-opacity-25  rounded mb-2"
                         href="../database/logout.php">📤 Sair</a>
-                    <!-- Add more nav links here -->
                 </nav>
             </aside>
 
@@ -178,9 +170,17 @@ if ($nivel == 1) {
                     <h1 class="fs-3 fw-semibold">Usuarios</h1>
                     <div class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search the users">
-                        <button class="btn btn-primary">Add</button>
+                        <button class="btn btn-primary">Procurar</button>
+                        <div class=" text-center ">
+                            <button class="btn btn-vinho ms-1 btn-secondary d-none" id="btnAgendarServico"
+                                style="width: 150px;" onclick="agendarServico();">
+                                <i class="fas fa-calendar-plus me-2"></i>Agendar
+                                Serviço
+                            </button>
+                        </div>
                     </div>
                 </div>
+
                 <?php if($nivel == 1):?>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
@@ -189,13 +189,14 @@ if ($nivel == 1) {
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Membro desde</th>
-                                <th>Serviço</th>
+                                <th>Nível</th>
+
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="usuarios">
                             <?php foreach ($usuarios as $usuario):?>
-                            <tr>
-                                <td><img src="avatar1.png" class="rounded-circle me-2" width="32">
+                            <tr class="btn-usuario" data-id="<?= $usuario['id']?>" style="cursor: pointer;">
+                                <td>
                                     <?= htmlspecialchars($usuario['nome'])?>
                                 </td>
                                 <td>
@@ -211,10 +212,16 @@ if ($nivel == 1) {
                                 </td>
                                 <td><span class="badge bg-success"> <?= htmlspecialchars($usuario['nivel'])?></span>
                                 </td>
+
                             </tr>
+
+
                             <?php endforeach?>
+
                         </tbody>
+
                     </table>
+                    <div id="servicosUsuario" class="d-none"></div>
                 </div>
                 <?php endif;?>
             </main>
@@ -223,6 +230,84 @@ if ($nivel == 1) {
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
+    </script>
+    <script>
+    document.querySelectorAll('.btn-usuario').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const btnAgendarServico = document.getElementById('btnAgendarServico');
+            btnAgendarServico.classList.remove('d-none')
+            const usuarios = document.querySelector('.usuarios');
+            usuarios.classList.add('d-none');
+            const userId = this.getAttribute('data-id');
+            document.getElementById('usuarioSelecionadoId').value = userId;
+            console.log(btnAgendarServico)
+            console.log(usuarios)
+            console.log(userId)
+            fetch(`../database/getServicos.php?id=${userId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('servicosUsuario');
+                    let html = '';
+
+                    if (data.length > 0) {
+
+                        html +=
+                            `<div class="alert alert-info">Veja as Consultas a seguir!<i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i></div>`;
+                        html += `<ul class="list-group">`;
+                        data.forEach(servico => {
+                            html += `<li class="list-group-item">
+                            <strong>Tipo Serviço:</strong> ${servico.tipo_servico}<br>
+                            <strong>Data de Início:</strong> ${servico.data_inicio}<br>
+                            <strong>Data de Término:</strong> ${servico.data_termino}<br>
+                            
+                            <div class="mt-2">
+                               
+                                    <button class="btn btn-sm btn-outline-secondary"  onclick="remarcarConsulta(${servico.id})">
+                                        <i class="fas fa-edit me-1"></i> Remarcar
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
+                                        <i class="fas fa-times me-1e"></i> Cancelar
+                                    </button>
+                                </div>
+                            </li>   
+                        `;
+                        });
+                        html += `</ul>`;
+                    } else {
+                        html =
+                            '<div class="alert alert-warning" id="avisoConsulta">Nenhuma Servico Agendado Encontrado!<i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i></div>';
+
+                    }
+
+                    container.innerHTML = html;
+                    container.classList.remove('d-none');
+
+                    setTimeout(() => {
+                        const voltar = document.querySelector("#voltar");
+                        const btnAgendarServico = document.getElementById(
+                            'btnAgendarServico');
+                        if (voltar) {
+                            voltar.addEventListener('click', () => {
+                                container.classList.add('d-none');
+                                usuarios.classList.remove('d-none')
+                                container.innerHTML = ''
+                                btnAgendarServico.classList.add('d-none')
+                            })
+                        }
+                    }, 0);
+                });
+        });
+    });
+
+    function agendarServico() {
+        document.querySelectorAll('.btn-usuario').forEach(btn => {
+            const usuarioId = btn.dataset.id;
+            document.getElementById('usuarioSelecionadoId').value = usuarioId;
+            const modal = new bootstrap.Modal(document.getElementById('modalAgendarServico'));
+            modal.show();
+
+        });
+    }
     </script>
 </body>
 
