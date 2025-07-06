@@ -122,21 +122,22 @@ require_once 'src/database/auth.php';
                 <div class="col-lg-6">
                     <div class="hero-content">
                         <h1 class="wow fadeInUp" data-wow-delay=".4s">
-                            O que faltava para sua empresa decolar!
+                            Bem-vindo à Aurora Ability IT
                         </h1>
                         <p class="wow fadeInUp" data-wow-delay=".6s">
-                            Esta com problemas para escalar sua marca? Aurorability veio para solucionar esta
-                            situação,
-                            Com nossos sites responsivos sua marca irá decolar!
+                            Somos apaixonados por transformar ideias em experiências digitais acessíveis, funcionais e
+                            inovadoras.
+                            Na Aurora Ability, tecnologia e inclusão caminham lado a lado para criar soluções únicas,
+                            feitas sob medida para cada pessoa.
 
                         </p>
                         <a href="javascript:void(0)" class="main-btn border-btn btn-hover wow fadeInUp"
-                            data-wow-delay=".6s">Veja nossos Planos!</a>
+                            data-wow-delay=".6s">Começar agora!</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="hero-img wow fadeInUp" data-wow-delay=".5s">
-                        <img src="src/img/hero-img.png" alt="" />
+                        <img src="src/img/hero-img.png" alt="inicial" />
                     </div>
                 </div>
             </div>
@@ -145,64 +146,228 @@ require_once 'src/database/auth.php';
     <!-- ======== hero-section end ======== -->
 
     <!-- ======== feature-section start ======== -->
-    <section id="servicos" class="feature-section pt-120">
+    <section id="servicos" class="feature-section py-5">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-8 col-sm-10">
+            <div class="row text-center justify-content-center">
+
+                <!-- Card 1 -->
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="single-feature">
-                        <div class="icon">
-                            <i class='bxr  bx-code'></i>
+                        <div class="icon icon-circle">
+                            <i class='bx bx-code'></i>
                         </div>
                         <div class="content">
-                            <h3>Sites Responsivos</h3>
+                            <h5>Sites Responsivos</h5>
                             <p>Sites que se adaptam a qualquer dispositivo, proporcionando a melhor experiência ao
-                                usuário.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-8 col-sm-10">
-                    <div class="single-feature">
-                        <div class="icon">
-                            <i class='bxr  bx-store-alt-2'></i>
-                        </div>
-                        <div class="content">
-                            <h3>Lojas Virtuais</h3>
-                            <p>Comércio eletrônico moderno com design atrativo e ferramentas para aumentar suas
-                                vendas.
+                                usuário.
                             </p>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-8 col-sm-10">
-                    <div class="single-feature">
-                        <div class="icon">
-                            <i class='bxr  bx-pencil-draw'></i>
-                        </div>
-                        <div class="content">
-                            <h3>Otimização SEO</h3>
-                            <p>Melhoramos o posicionamento do seu site no Google e atraímos mais visitantes
-                                qualificados.</p>
-                        </div>
+
+
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-8 col-sm-10">
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-6 mb-4">
                     <div class="single-feature">
-                        <div class="icon">
-                            <i class='bxr  bx-mobile'></i>
+                        <div class="icon icon-circle">
+                            <i class='bx bx-store-alt-2'></i>
                         </div>
                         <div class="content">
-                            <h3>Desenvolvimento Mobile</h3>
-                            <p>Curabitur aliquet quam id dui posuere blandit. Sed porttitor lectus nibh. Vivamus
-                                magna
-                                justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero
-                                malesuada feugiat.</p>
+                            <h5>Lojas Virtuais</h5>
+                            <p>Comércio eletrônico moderno com design atrativo e ferramentas para aumentar suas vendas.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="single-feature">
+                        <div class="icon icon-circle">
+                            <i class='bx bx-pencil'></i>
+                        </div>
+                        <div class="content">
+                            <h5>Otimização SEO</h5>
+                            <p>Melhoramos o posicionamento do seu site no Google e atraímos mais visitantes
+                                qualificados.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="single-feature">
+                        <div class="icon icon-circle">
+                            <i class='bx bx-mobile'></i>
+                        </div>
+                        <div class="content">
+                            <h5> Mobile</h5>
+                            <p>Aplicativos com design moderno e foco em usabilidade, performance e integração com
+                                sistemas
+                                web.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div class="container-fluid py-5" style="background: rgb(167, 167, 167,0.1);;">
+        <div class="text-center mb-5">
+            <small class="text-uppercase text-secondary fw-bold">Planos</small>
+            <h2 class="fw-bold mt-2">Nossos <span class="text-primary">Planos</span></h2>
+        </div>
+
+        <div class="row g-5 px-5">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tour-card card h-100 shadow-sm border-0 rounded-4 overflow-hidden transition transform hover-shadow"
+                    style="transition: all 0.3s ease-in-out;">
+
+                    <div class="position-relative">
+                        <img src="src/img/card1.jpg" class="w-100" alt="Beach"
+                            style="object-fit: cover; height: 220px;">
+                        <span
+                            class="position-absolute top-0 end-0 m-2 badge bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">$2,490</span>
+                    </div>
+
+                    <div class="p-4 d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-2">Plano Básico</h5>
+                            <p class="small text-muted mb-3">Ideal para quem está começando. Entregamos o essencial com
+                                velocidade e simplicidade.</p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Design:</strong> Usamos um template, adaptamos as cores e logo.
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Dev:</strong> Página única com HTML/CSS (landing page).
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Social Media:</strong> Criamos o perfil e postamos 1x por semana.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="mb-3">
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Essencial</span>
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Pronto Pra Usar</span>
+                                <span class="badge bg-light text-dark border rounded-pill">Rápido</span>
+                            </div>
+                            <a href="#"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tour-card card h-100 shadow-sm border-0 rounded-4 overflow-hidden transition transform hover-shadow"
+                    style="transition: all 0.3s ease-in-out;">
+
+                    <div class="position-relative">
+                        <img src="src/img/card2.jpeg" class="w-100" alt="Arctic"
+                            style="object-fit: cover; height: 220px;">
+                        <span
+                            class="position-absolute top-0 end-0 m-2 badge bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">$4,950</span>
+                    </div>
+
+                    <div class="p-4 d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-2">Plano Intermediário</h5>
+                            <p class="small text-muted mb-3">Para empresas que querem uma presença sólida e funcional.
+                            </p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Design:</strong> Visual próprio, responsivo, com identidade visual
+                                    personalizada.
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Dev:</strong> Até páginas com formulário e responsividade (HTML, CSS, JS).
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Social Media:</strong> Estratégia semanal, com 3 posts por semana.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="mb-3">
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Identidade</span>
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Presença Digital</span>
+                                <span class="badge bg-light text-dark border rounded-pill">Estratégico</span>
+                            </div>
+                            <a href="#"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="tour-card card h-100 shadow-sm border-0 rounded-4 overflow-hidden transition transform hover-shadow"
+                    style="transition: all 0.3s ease-in-out;">
+
+                    <div class="position-relative">
+                        <img src="src/img/card2.webp" class="w-100" alt="Sahara"
+                            style="object-fit: cover; height: 220px;">
+                        <span
+                            class="position-absolute top-0 end-0 m-2 badge bg-primary fs-6 px-3 py-2 rounded-pill shadow-sm">$6,420</span>
+                    </div>
+
+                    <div class="p-4 d-flex flex-column justify-content-between h-100">
+                        <div>
+                            <h5 class="fw-bold text-dark mb-2">Plano Avançado</h5>
+                            <p class="small text-muted mb-3">Para empresas que querem se destacar e crescer no digital.
+                            </p>
+                            <ul class="list-group list-group-flush mb-3">
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Design:</strong> UX/UI pensadas do zero, com protótipos e testes de
+                                    usabilidade.
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Dev:</strong> Site completo com backend (login, banco, painel admin).
+                                </li>
+                                <li class="list-group-item border-0 ps-0 pb-2">
+                                    <strong>Social Media:</strong> Planejamento mensal, análises de resultado,
+                                    calendário e execução.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="mb-3">
+                                <span class="badge bg-light text-dark border rounded-pill me-1">UX Premium</span>
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Automação</span>
+                                <span class="badge bg-light text-dark border rounded-pill">Alta Performance</span>
+                            </div>
+                            <a href="#"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
     <!-- ======== feature-section end ======== -->
 
 
