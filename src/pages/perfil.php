@@ -54,7 +54,6 @@ if ($nivel == 1) {
                             <option value="Plano Básico">Plano Básico</option>
                             <option value="Plano Intermediário">Plano Intermediário</option>
                             <option value="PlanoAvancado">Plano Avançado</option>
-                            <!-- Adicione mais conforme necessário -->
                         </select>
                     </div>
                     <div class="mb-3">
@@ -240,9 +239,6 @@ if ($nivel == 1) {
             usuarios.classList.add('d-none');
             const userId = this.getAttribute('data-id');
             document.getElementById('usuarioSelecionadoId').value = userId;
-            console.log(btnAgendarServico)
-            console.log(usuarios)
-            console.log(userId)
             fetch(`../database/getServicos.php?id=${userId}`)
                 .then(response => response.json())
                 .then(data => {
@@ -262,10 +258,10 @@ if ($nivel == 1) {
                             
                             <div class="mt-2">
                                
-                                    <button class="btn btn-sm btn-outline-secondary"  onclick="remarcarConsulta(${servico.id})">
+                                    <button class="btn btn-sm btn-outline-secondary"  onclick="remarcarConsulta(${servico.userId})">
                                         <i class="fas fa-edit me-1"></i> Remarcar
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.userId})">
                                         <i class="fas fa-times me-1e"></i> Cancelar
                                     </button>
                                 </div>
@@ -300,13 +296,8 @@ if ($nivel == 1) {
     });
 
     function agendarServico() {
-        document.querySelectorAll('.btn-usuario').forEach(btn => {
-            const usuarioId = btn.dataset.id;
-            document.getElementById('usuarioSelecionadoId').value = usuarioId;
-            const modal = new bootstrap.Modal(document.getElementById('modalAgendarServico'));
-            modal.show();
-
-        });
+        const modal = new bootstrap.Modal(document.getElementById('modalAgendarServico'));
+        modal.show();
     }
     </script>
 </body>

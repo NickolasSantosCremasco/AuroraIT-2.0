@@ -132,7 +132,7 @@ require_once 'src/database/auth.php';
 
                         </p>
                         <a href="javascript:void(0)" class="main-btn border-btn btn-hover wow fadeInUp"
-                            data-wow-delay=".6s">Começar agora!</a>
+                            data-wow-delay=".6s">Solicite um Orçamento!</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -261,11 +261,19 @@ require_once 'src/database/auth.php';
                                 <span class="badge bg-light text-dark border rounded-pill me-1">Pronto Pra Usar</span>
                                 <span class="badge bg-light text-dark border rounded-pill">Rápido</span>
                             </div>
-                            <a href="#"
+                            <?php if(!estaLogado()):?>
+                            <a href="src/pages/login.php"
                                 class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
                                 Adquira Já
                                 <i class="bi bi-arrow-right-circle"></i>
                             </a>
+                            <?php else : ?>
+                            <a href="src/pages/faleconosco.php"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>
@@ -308,11 +316,19 @@ require_once 'src/database/auth.php';
                                 <span class="badge bg-light text-dark border rounded-pill me-1">Presença Digital</span>
                                 <span class="badge bg-light text-dark border rounded-pill">Estratégico</span>
                             </div>
-                            <a href="#"
+                            <?php if(!estaLogado()):?>
+                            <a href="src/pages/login.php"
                                 class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
                                 Adquira Já
                                 <i class="bi bi-arrow-right-circle"></i>
                             </a>
+                            <?php else : ?>
+                            <a href="src/pages/faleconosco.php"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>
@@ -356,11 +372,19 @@ require_once 'src/database/auth.php';
                                 <span class="badge bg-light text-dark border rounded-pill me-1">Automação</span>
                                 <span class="badge bg-light text-dark border rounded-pill">Alta Performance</span>
                             </div>
-                            <a href="#"
+                            <?php if(!estaLogado()):?>
+                            <a href="src/pages/login.php"
                                 class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
                                 Adquira Já
                                 <i class="bi bi-arrow-right-circle"></i>
                             </a>
+                            <?php else : ?>
+                            <a href="src/pages/faleconosco.php"
+                                class="btn btn-primary w-100 fw-semibold d-flex align-items-center justify-content-center gap-2">
+                                Adquira Já
+                                <i class="bi bi-arrow-right-circle"></i>
+                            </a>
+                            <?php endif;?>
                         </div>
                     </div>
                 </div>
