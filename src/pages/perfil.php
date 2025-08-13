@@ -11,8 +11,12 @@ $usuario_id = $_SESSION['usuario']['id'];
 $nivel = $_SESSION['usuario']['nivel'];
 
 if ($nivel == 1) {
-    $stmtUsuarios = $pdo->query('SELECT id, nome, email, nivel, data_criacao FROM usuarios ORDER BY nome ASC');
-    $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
+    $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, nivel, data_criacao FROM usuarios ORDER BY nome ASC');
+    $stmtUsuarios->execute();
+    if (!$stmtUsuarios) {
+        die('Erro ao buscar usuários: ' . $pdo->errorInfo()[2]);
+    };
+     $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
 } 
 ?>
 <!DOCTYPE html>
@@ -72,104 +76,44 @@ if ($nivel == 1) {
 </div>
 
 <body>
-    <!-- ======== header start ======== -->
-    <header class="header">
-        <div class="navbar-area">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg" style="background-color: transparent;">
-                            <a class="navbar-brand" href="index.html">
-                                <img src="../img/logo/logo.png" alt="Logo" />
-                            </a>
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                                <span class="toggler-icon"></span>
-                            </button>
 
-                            <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
-                                <ul id="nav" class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a class="page-scroll active" href="../../index.php">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="../../index.php">Serviços</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="../pages/planos.php">Planos e Templates</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a class="page-scroll" href="../../index.php">Redes</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="../pages/faleconosco.php">Fale conosco</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="../../index.php">Sobre a empresa</a>
-                                    </li>
-
-
-                                    <?php if(estaLogado()) : ?>
-                                    <!-- Mostra a imagem do usuário logado -->
-                                    <div class="d-flex align-items-center flex-column gap-2"
-                                        style="position: relative; bottom: 15px; left: 20px;">
-                                        <a href="src/pages/perfil.php" class="perfil">
-                                            <img src="https://icon-library.com/images/generic-user-icon/generic-user-icon-9.jpg"
-                                                class="border" alt="Usuário"
-                                                style="width: 60px; height: 60px; border-radius: 50%;">
-                                        </a>
-                                        <span class="fw-bold"
-                                            style="color: white;"><?php echo ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]) ?></span>
-                                    </div>
-                                    <?php else : ?>
-
-                                    <li class="nav-item-login">
-                                        <a href="src/pages/login.php">Login</a>
-                                    </li>
-                                    <?php endif ?>
-
-                                </ul>
-                            </div>
-                            <!-- navbar collapse -->
-                        </nav>
-                        <!-- navbar -->
-                    </div>
-                </div>
-                <!-- row -->
-            </div>
-            <!-- container -->
-        </div>
-        <!-- navbar area -->
-    </header>
-    <!-- ======== header end ======== -->
     <!---->
-    <section class="container mb-4" style="margin-top: 15%;">
+    <section class="container-fluid mt-4">
         <div class="d-flex rounded">
             <!-- Sidebar -->
-            <aside class="bg-primary text-white p-3 vh-100 d-flex flex-column rounded-start" style="width: 240px;">
+            <aside class="bg-primary text-white p-3 d-flex flex-column rounded-start col-5 col-md-3 col-lg-2">
                 <div class="d-flex align-items-center mb-4">
                     <img src="../img/favicon/favicon.png" alt="Logo Aurora" width="30" class="me-2">
                     <span class="fw-bold fs-5">Aurora</span>
                 </div>
+                <!-- Navegação -->
                 <nav class="nav flex-column">
-                    <a class="nav-link text-white active bg-opacity-25 bg-white rounded mb-2" href="#">🏠 Inicial</a>
-                    <a class="nav-link text-white bg-danger bg-opacity-25  rounded mb-2"
-                        href="../database/logout.php">📤 Sair</a>
+                    <a class="nav-link text-white active bg-white bg-opacity-25 rounded mb-2" href="../../index.php">
+                        <i class="fas fa-home me-2"></i> Inicial
+                    </a>
+                    <a class="nav-link text-white rounded mb-2" href="#">
+                        <i class="fas fa-users me-2"></i> Usuários
+                    </a>
+                    <a class="nav-link text-white rounded mb-2" href="#">
+                        <i class="fas fa-calendar-alt me-2"></i> Serviços
+                    </a>
+                    <a class="nav-link text-white rounded mb-2" href="#">
+                        <i class="fas fa-cog me-2"></i> Configurações
+                    </a>
+                    <a class="nav-link text-white bg-danger bg-opacity-25 rounded mt-auto"
+                        href="../database/logout.php">
+                        <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
+                    </a>
                 </nav>
             </aside>
 
             <!-- Main Content -->
-            <main class="flex-grow-1 bg-white p-4 rounded-end">
+            <main class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="fs-3 fw-semibold">Usuarios</h1>
                     <div class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search the users">
-                        <button class="btn btn-primary">Procurar</button>
+                        <input class="form-control me-2" type="search" placeholder="Procurar Usuário"
+                            aria-label="Search" id="searchUsuario">
                         <div class=" text-center ">
                             <button class="btn btn-vinho ms-1 btn-secondary d-none" id="btnAgendarServico"
                                 style="width: 150px;" onclick="agendarServico();">
@@ -231,7 +175,30 @@ if ($nivel == 1) {
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous">
     </script>
     <script>
-    document.querySelectorAll('.btn-usuario').forEach(btn => {
+    const searchInput = document.getElementById('searchUsuario');
+    searchInput.addEventListener('input', function() {
+        const termo = this.value.trim();
+        if (termo.length === 0) {
+            location.reload();
+            return;
+        }
+        fetch(`../database/buscarUsuarios.php?q=${encodeURIComponent(termo)}`)
+            .then(response => response.json())
+            .then(usuarios => {
+                let html = '';
+                usuarios.forEach(usuario => {
+                    html += `<tr class="btn-usuario" data-id="${usuario.id}" style="cursor: pointer;">
+                    <td>${usuario.nome}</td>
+                    <td>${usuario.email}</td>
+                    <td>${new Date(usuario.data_criacao).toLocaleDateString('pt-BR')}</td>
+                    <td><span class="badge bg-success">${usuario.nivel}</span></td>
+                </tr>`;
+                });
+                document.querySelector('.usuarios').innerHTML = html;
+            });
+    });
+
+    document.querySelectorAll(' .btn-usuario').forEach(btn => {
         btn.addEventListener('click', function() {
             const btnAgendarServico = document.getElementById('btnAgendarServico');
             btnAgendarServico.classList.remove('d-none')
@@ -248,30 +215,33 @@ if ($nivel == 1) {
                     if (data.length > 0) {
 
                         html +=
-                            `<div class="alert alert-info">Veja as Consultas a seguir!<i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i></div>`;
+                            `<div class="alert alert-info">Veja as Consultas a seguir!<i class="fas fa-arrow-left float-end"
+                                style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i></div>`;
                         html += `<ul class="list-group">`;
                         data.forEach(servico => {
                             html += `<li class="list-group-item">
-                            <strong>Tipo Serviço:</strong> ${servico.tipo_servico}<br>
-                            <strong>Data de Início:</strong> ${servico.data_inicio}<br>
-                            <strong>Data de Término:</strong> ${servico.data_termino}<br>
-                            
-                            <div class="mt-2">
-                               
-                                    <button class="btn btn-sm btn-outline-secondary"  onclick="remarcarConsulta(${servico.userId})">
+                                <strong>Tipo Serviço:</strong> ${servico.tipo_servico}<br>
+                                <strong>Data de Início:</strong> ${servico.data_inicio}<br>
+                                <strong>Data de Término:</strong> ${servico.data_termino}<br>
+
+                                <div class="mt-2">
+
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                        onclick="remarcarConsulta(${servico.userId})">
                                         <i class="fas fa-edit me-1"></i> Remarcar
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.userId})">
+                                    <button class="btn btn-sm btn-outline-danger"
+                                        onclick="cancelarConsulta(${servico.userId})">
                                         <i class="fas fa-times me-1e"></i> Cancelar
                                     </button>
                                 </div>
-                            </li>   
-                        `;
+                            </li>
+                            `;
                         });
                         html += `</ul>`;
                     } else {
                         html =
-                            '<div class="alert alert-warning" id="avisoConsulta">Nenhuma Servico Agendado Encontrado!<i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i></div>';
+                            '<div class="alert alert-warning" id="avisoConsulta">Nenhuma Servico Agendado Encontrado!</div><i class = "fas fa-arrow-left float-end" style = "font-size:8pt; margin-top:8px;cursor:pointer;" id = "voltar" > Voltar < /i></div > ';
 
                     }
 
