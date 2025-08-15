@@ -33,14 +33,15 @@ require_once 'src/database/auth.php';
 
     <!-- JS DE ACESSIBILIDADE -->
     <script src="src/js/acessibilidade.js" defer></script>
+    <style>
 
-
+    </style>
 </head>
 
 <body>
 
     <!-- ======== header start ======== -->
-    <header class="header">
+    <header class=" header">
         <div class="navbar-area">
             <div class="container">
                 <div class="row align-items-center">
@@ -66,7 +67,7 @@ require_once 'src/database/auth.php';
                                         <a class="page-scroll" href="#servicos">Serviços</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="page-scroll" href="src/pages/planos.php">Planos e Templates</a>
+                                        <a class="page-scroll" href="src/pages/planos.php">Planos</a>
                                     </li>
 
                                     <li class="nav-item">
@@ -114,6 +115,13 @@ require_once 'src/database/auth.php';
         <!-- navbar area -->
     </header>
     <!-- ======== header end ======== -->
+    <a href="https://wa.me/5511974557734" target="_blank"
+        class="position-fixed bottom-0 end-0 m-3 transition-all duration-300 hover:scale-110 whatsapp"
+        style="z-index: 22222;">
+
+        <img src=" src/img/logo/whatsapp.png" alt="WhatsApp" class="img-fluid rounded-circle shadow whatsapp-hover"
+            style="width: clamp(60px, 10vw, 100px); height: auto;">
+    </a>
 
     <!-- ======== hero-section start ======== -->
     <section id="home" class="hero-section">
@@ -125,9 +133,11 @@ require_once 'src/database/auth.php';
                             Bem-vindo à Aurora Ability IT
                         </h1>
                         <p class="wow fadeInUp" data-wow-delay=".6s">
-                            Somos apaixonados por transformar ideias em experiências digitais acessíveis, funcionais e
+                            Somos apaixonados por transformar ideias em experiências digitais acessíveis, funcionais
+                            e
                             inovadoras.
-                            Na Aurora Ability, tecnologia e inclusão caminham lado a lado para criar soluções únicas,
+                            Na Aurora Ability, tecnologia e inclusão caminham lado a lado para criar soluções
+                            únicas,
                             feitas sob medida para cada pessoa.
 
                         </p>
@@ -175,7 +185,8 @@ require_once 'src/database/auth.php';
                         </div>
                         <div class="content">
                             <h5>Lojas Virtuais</h5>
-                            <p>Comércio eletrônico moderno com design atrativo e ferramentas para aumentar suas vendas.
+                            <p>Comércio eletrônico moderno com design atrativo e ferramentas para aumentar suas
+                                vendas.
                             </p>
                         </div>
 
@@ -240,7 +251,8 @@ require_once 'src/database/auth.php';
                     <div class="p-4 d-flex flex-column justify-content-between h-100">
                         <div>
                             <h5 class="fw-bold text-dark mb-2">Plano Básico</h5>
-                            <p class="small text-muted mb-3">Ideal para quem está começando. Entregamos o essencial com
+                            <p class="small text-muted mb-3">Ideal para quem está começando. Entregamos o essencial
+                                com
                                 velocidade e simplicidade.</p>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item border-0 ps-0 pb-2">
@@ -258,7 +270,8 @@ require_once 'src/database/auth.php';
                         <div>
                             <div class="mb-3">
                                 <span class="badge bg-light text-dark border rounded-pill me-1">Essencial</span>
-                                <span class="badge bg-light text-dark border rounded-pill me-1">Pronto Pra Usar</span>
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Pronto Pra
+                                    Usar</span>
                                 <span class="badge bg-light text-dark border rounded-pill">Rápido</span>
                             </div>
                             <?php if(!estaLogado()):?>
@@ -294,7 +307,8 @@ require_once 'src/database/auth.php';
                     <div class="p-4 d-flex flex-column justify-content-between h-100">
                         <div>
                             <h5 class="fw-bold text-dark mb-2">Plano Intermediário</h5>
-                            <p class="small text-muted mb-3">Para empresas que querem uma presença sólida e funcional.
+                            <p class="small text-muted mb-3">Para empresas que querem uma presença sólida e
+                                funcional.
                             </p>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item border-0 ps-0 pb-2">
@@ -302,7 +316,8 @@ require_once 'src/database/auth.php';
                                     personalizada.
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2">
-                                    <strong>Dev:</strong> Até páginas com formulário e responsividade (HTML, CSS, JS).
+                                    <strong>Dev:</strong> Até páginas com formulário e responsividade (HTML, CSS,
+                                    JS).
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2">
                                     <strong>Social Media:</strong> Estratégia semanal, com 3 posts por semana.
@@ -313,7 +328,8 @@ require_once 'src/database/auth.php';
                         <div>
                             <div class="mb-3">
                                 <span class="badge bg-light text-dark border rounded-pill me-1">Identidade</span>
-                                <span class="badge bg-light text-dark border rounded-pill me-1">Presença Digital</span>
+                                <span class="badge bg-light text-dark border rounded-pill me-1">Presença
+                                    Digital</span>
                                 <span class="badge bg-light text-dark border rounded-pill">Estratégico</span>
                             </div>
                             <?php if(!estaLogado()):?>
@@ -349,7 +365,8 @@ require_once 'src/database/auth.php';
                     <div class="p-4 d-flex flex-column justify-content-between h-100">
                         <div>
                             <h5 class="fw-bold text-dark mb-2">Plano Avançado</h5>
-                            <p class="small text-muted mb-3">Para empresas que querem se destacar e crescer no digital.
+                            <p class="small text-muted mb-3">Para empresas que querem se destacar e crescer no
+                                digital.
                             </p>
                             <ul class="list-group list-group-flush mb-3">
                                 <li class="list-group-item border-0 ps-0 pb-2">
