@@ -1,8 +1,9 @@
 <?php
 
-require_once '../database/config.php'; // Arquivo com a conexão PDO
+require_once '../database/config.php'; 
 require_once '../database/auth.php';
-// Verifica se o usuário está logado
+
+
  if(!estaLogado()) {
     header('Location: login.php');
     exit;
