@@ -82,10 +82,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="checkbox" class="form-check-input" id="rememberMe">
                         <label class="form-check-label" for="rememberMe" style="color:#6c757d;">Me lembre</label>
                     </div>
-                    <a href="#" class="text-decoration-none" style="color:#7c7cf2;">Esqueceu?</a>
+                    <a href="#" class="text-decoration-none" style="color:#00C9B1;">Esqueceu?</a>
 
                 </div>
-                <button type="submit" class="btn btn-login w-100">Cadastre-se</button>
+                <button type="submit" class="btn btn-login w-100"
+                    style="background-color: #00C9B1;">Cadastre-se</button>
                 <div>
                     <div class="text-center">
                         <small style="color:#6c757d;">Já possui uma conta?

@@ -468,25 +468,25 @@ require_once 'src/database/auth.php';
         <div class="blogs">
             <div class="blog-card">
                 <img src="src/img/projetos/projeto1.jpeg" alt="Blog 1">
-                <div class="blog-tags"><span>Design</span><span>Engineering</span></div>
+                <div class="blog-tags"><span>Educação</span><span>Automação</span></div>
                 <div class="blog-content">
-                    <h3>Website Computação Quântica</h3>
-                    <p>Website que é a base de uma introdução aos conhecimentos sobre a computação quÂntica</p>
+                    <h3>Website de Computação Quântica</h3>
+                    <p>Website que é a base de uma introdução aos conhecimentos sobre a computação quântica</p>
                     <div class="blog-footer">
-                        <span>👤 Alex Demo</span>
-                        <span>📅 25 Mar, 2025</span>
+                        <span>👤 Quatun</span>
+                        <span>📅 18 Nov, 2023</span>
                     </div>
                 </div>
             </div>
             <div class="blog-card">
                 <img src="src/img/projetos/projeto2.jpeg" alt="Blog 2">
-                <div class="blog-tags"><span>Development</span><span>Security</span></div>
+                <div class="blog-tags"><span>Desenvolvimento</span><span>Design</span></div>
                 <div class="blog-content">
                     <h3>Website de jogos</h3>
                     <p>Website de desenvolvimento de jogos.</p>
                     <div class="blog-footer">
-                        <span>👤 Hendary Jonson</span>
-                        <span>📅 12 Feb, 2025</span>
+                        <span>👤 PlayOn</span>
+                        <span>📅 18 Out, 2024</span>
                     </div>
                 </div>
             </div>
