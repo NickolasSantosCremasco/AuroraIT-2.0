@@ -238,7 +238,7 @@ require_once 'src/database/auth.php';
                                         <a class="nav-link" href="#servicos">Serviços</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="src/pages/planos.php">Planos</a>
+                                        <a class="nav-link" href="#planos">Planos</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="#redes">Redes</a>
@@ -405,7 +405,7 @@ require_once 'src/database/auth.php';
     </section>
 
     <!-- Planos Section -->
-    <section class="container-fluid py-5 bg-light">
+    <section class="container-fluid py-5 bg-light" id="planos">
         <div class="container">
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Nossos <span class="text-primary">Planos</span></h2>
@@ -708,7 +708,7 @@ require_once 'src/database/auth.php';
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
                         <li class="mb-2"><a href="#" class="text-white text-decoration-none">Serviços</a></li>
-                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Planos</a></li>
+                        <li class="mb-2"><a href="#planos" class="text-white text-decoration-none">Planos</a></li>
                         <li class="mb-2"><a href="#" class="text-white text-decoration-none">Sobre Nós</a></li>
                     </ul>
                 </div>

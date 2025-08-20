@@ -345,6 +345,28 @@ if ($nivel == 1) {
         const modal = new bootstrap.Modal(document.getElementById('modalAgendarServico'));
         modal.show();
     }
+
+    function cancelarServico(id) {
+        if (!confirm('Tem certeza que deseja cancelar este serviço?')) return;
+
+        fetch('../database/cancelarServico.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${id}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.sucesso) {
+                    alert('Servico Cancelado com Sucesso.')
+                    location.reload();
+                } else {
+                    alert('Erro:' + (data.erro || 'Desconhecido'));
+                }
+            })
+            .catch(err => alert('Erro na requisição: ' + err));
+    }
     </script>
 </body>
 
