@@ -31,195 +31,256 @@ require_once 'src/database/auth.php';
 
     <!-- JS DE ACESSIBILIDADE -->
     <script src="src/js/acessibilidade.js" defer></script>
-
     <style>
-    /* Estilos otimizados para responsividade */
-    .hero-section {
-        padding: 190px 0 20px;
+    :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --accent-color: #00d4ff;
+        --text-dark: #2d3748;
+        --text-muted: #718096;
+        --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.15);
     }
 
-
-    .feature-card .icon-circle {
-        width: 80px;
-        height: 80px;
-        background: #e0f7fa;
-        /* Cor de fundo do círculo */
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        border: 2px solid #b2ebf2;
-        /* Cor da borda */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f8fafc;
     }
 
-    .feature-card .icon-circle i {
-        font-size: 3rem;
-        color: #00bcd4;
-        /* Cor do ícone */
-    }
-
-    .card-title {
-        color: #333;
-        font-weight: 600;
-    }
-
-    .card-text {
-        color: #666;
-    }
-
-    .feature-card {
-        border-radius: 15px;
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .navbar-toggler {
-        border: none;
-        padding: 0;
-    }
-
-    .toggler-icon {
-        display: block;
-        width: 25px;
-        height: 3px;
-        background-color: #fff;
-        margin: 5px 0;
-        transition: all 0.3s ease;
-    }
-
-    .navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
-
-    .navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(2) {
-        opacity: 0;
-    }
-
-    .navbar-toggler[aria-expanded="true"] .toggler-icon:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -6px);
-    }
-
-    .header_hero {
+    /* Seção de portfólio com background dinâmico */
+    .portfolio-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         position: relative;
-        padding: 100px 0;
         overflow: hidden;
     }
 
-    .header_hero::before {
+    .portfolio-section::before {
         content: '';
         position: absolute;
-        top: -100px;
-        right: -100px;
-        width: 300px;
-        height: 300px;
-        background: rgba(110, 142, 251, 0.1);
-        border-radius: 50%;
-        z-index: -1;
+        top: -50%;
+        left: -20%;
+        width: 140%;
+        height: 200%;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23e2e8f0" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        opacity: 0.3;
+        z-index: 0;
     }
 
-    .header_hero::after {
-        content: '';
-        position: absolute;
-        bottom: -50px;
-        left: -50px;
-        width: 200px;
-        height: 200px;
-        background: rgba(167, 119, 227, 0.1);
-        border-radius: 50%;
-        z-index: -1;
+    .portfolio-content {
+        position: relative;
+        z-index: 1;
     }
 
-    @media (max-width: 768px) {
-        .hero-content h1 {
-            font-size: 2rem;
-        }
-
-        .header_hero_content {
-            text-align: center;
-        }
-
-        .header_social {
-            position: static !important;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
-
-        .header_hero_image {
-            margin-top: 30px !important;
-        }
+    /* Título da seção */
+    .section-header {
+        margin-bottom: 4rem;
     }
 
-    .blog-card {
-        transition: transform 0.3s ease;
+    .section-subtitle {
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
     }
 
-    .blog-card:hover {
-        transform: translateY(-5px);
+    .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
     }
 
-    .whatsapp-hover {
-        transition: transform 0.3s ease;
+    .section-title .highlight {
+        background: linear-gradient(45deg, var(--accent-color), #667eea);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
     }
 
-    .whatsapp:hover .whatsapp-hover {
+    /* Cards de projeto modernos */
+    .project-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        height: 100%;
+        border: none;
+    }
+
+    .project-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: var(--card-shadow-hover);
+    }
+
+    .project-image-container {
+        position: relative;
+        height: 280px;
+        overflow: hidden;
+    }
+
+    .project-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-image {
         transform: scale(1.1);
     }
 
-    .feature-card .icon-circle {
-        width: 80px;
-        height: 80px;
-        background: #e0f7fa;
-        /* Cor de fundo do círculo */
-        border-radius: 50%;
+    /* Overlay com informações */
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto;
-        border: 2px solid #b2ebf2;
-        /* Cor da borda */
+        opacity: 0;
+        transition: all 0.3s ease;
     }
 
-    .feature-card .icon-circle i {
-        font-size: 3rem;
-        color: #00bcd4;
-        /* Cor do ícone */
+    .project-card:hover .project-overlay {
+        opacity: 1;
     }
 
-    .card-title {
-        color: #333;
-        font-weight: 600;
-    }
-
-    .card-text {
-        color: #666;
-    }
-
-    .feature-card {
-        border-radius: 15px;
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-5px);
-    }
-
-
-    .featured::before {
-        content: 'MAIS POPULAR';
-        position: absolute;
-        top: 30px;
-        left: -40px;
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    .overlay-content {
+        text-align: center;
         color: white;
-        padding: 8px 40px;
-        font-size: 0.8rem;
-        font-weight: bold;
-        transform: rotate(-45deg);
-        z-index: 2;
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .overlay-content {
+        transform: translateY(0);
+    }
+
+    .view-project-btn {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .view-project-btn:hover {
+        background: white;
+        color: var(--text-dark);
+        transform: translateY(-2px);
+    }
+
+    /* Conteúdo do card */
+    .project-content {
+        padding: 2rem;
+    }
+
+    .project-category {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .category-education {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+    }
+
+    .category-entertainment {
+        background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+        color: white;
+    }
+
+    .category-health {
+        background: linear-gradient(135deg, #ff6b6b, #ffa500);
+        color: white;
+    }
+
+    .project-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+    }
+
+    .project-description {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    /* Tecnologias usadas */
+    .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .tech-tag {
+        background: #f1f5f9;
+        color: #475569;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    /* Animações de entrada */
+    .fade-in-up {
+        opacity: 0;
+        transform: translateY(40px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+
+    .delay-2 {
+        animation-delay: 0.3s;
+    }
+
+    .delay-3 {
+        animation-delay: 0.5s;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-image-container {
+            height: 220px;
+        }
+
+        .section-header {
+            margin-bottom: 2rem;
+        }
     }
     </style>
 </head>
@@ -444,13 +505,17 @@ require_once 'src/database/auth.php';
 
                             <ul class="list-group list-group-flush mb-3 border-0">
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Design:</strong> Usamos um template, adaptamos as cores e logo.
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Design:</strong> Uso de
+                                    template, adaptamos as cores e logo.
+                                </li>
+
+                                <li class="list-group-item border-0 ps-0 pb-2 small">
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Dev:</strong> Página
+                                    única com HTML/CSS (landing page).
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Dev:</strong> Página única com HTML/CSS (landing page).
-                                </li>
-                                <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Social Media:</strong> Criamos o perfil e postamos 1x por semana.
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Social Media:</strong>
+                                    Criamos o perfil e postamos 1x por semana.
                                 </li>
                             </ul>
 
@@ -493,14 +558,17 @@ require_once 'src/database/auth.php';
 
                             <ul class="list-group list-group-flush mb-3 border-0">
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Design:</strong> Visual próprio, responsivo, com identidade visual
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Design:</strong> Visual
+                                    próprio, responsivo, com identidade visual
                                     personalizada.
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Dev:</strong> Até páginas com formulário e responsividade (HTML, CSS, JS).
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Dev:</strong> Até
+                                    páginas com formulário e responsividade (HTML, CSS, JS).
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Social Media:</strong> Estratégia semanal, com 3 posts por semana.
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Social Media:</strong>
+                                    Estratégia semanal, com 3 posts por semana.
                                 </li>
                             </ul>
 
@@ -542,14 +610,17 @@ require_once 'src/database/auth.php';
 
                             <ul class="list-group list-group-flush mb-3 border-0">
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Design:</strong> UX/UI pensadas do zero, com protótipos e testes de
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Design:</strong> UX/UI
+                                    pensadas do zero, com protótipos e testes de
                                     usabilidade.
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Dev:</strong> Site completo com backend (login, banco, painel admin).
+                                    <i class="bi bi-check-circle text-success me-2"></i><strong>Dev:</strong> Site
+                                    completo com backend (login, banco, painel admin).
                                 </li>
                                 <li class="list-group-item border-0 ps-0 pb-2 small">
-                                    <strong>Social Media:</strong> Planejamento mensal, análises de resultado,
+                                    <i class="bi bi-check-circle text-success me-2"></i> <strong>Social Media:</strong>
+                                    Planejamento mensal, análises de resultado,
                                     calendário e execução.
                                 </li>
                             </ul>
@@ -632,69 +703,113 @@ require_once 'src/database/auth.php';
     </section>
 
 
-    <section class="container py-5">
-        <div class="row text-center mb-5">
-            <div class="col-12">
-                <h6 class="text-muted text-uppercase">PORTFÓLIO</h6>
-                <h2 class="fw-bold">Nossos <span class="text-info">Projetos</span></h2>
-                <p class="text-muted">Conheça alguns dos nossos trabalhos mais recentes.</p>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-4" id="">
-                <a href="#" class="text-decoration-none">
-                    <div class="card project-card h-100 border-0 shadow-sm">
-                        <img src="src/img/projetos/Captura de tela 2025-08-19 203736.png" class="card-img-top"
-                            alt="Website de Computação Quântica">
-                        <div class="card-body text-center">
-                            <span class="badge bg-info mb-2">Educação</span>
-                            <h5 class="card-title text-black">Quatun</h5>
-                            <p style="text-align: justify;">Quantun é uma empresa dedicada a evolução intelectual dos
-                                seus usuários,
-                                divulgando
-                                conhecimentos sobre a computação quântica e comercializando oportunidades de ter mais
-                                tempo com automações</p>
-                        </div>
-                    </div>
-                </a>
+    <section class="portfolio-section py-5">
+        <div class="container portfolio-content">
+            <!-- Header da seção -->
+            <div class="section-header text-center fade-in-up">
+                <h6 class="section-subtitle">PORTFÓLIO</h6>
+                <h2 class="section-title">Nossos <span class="highlight">Projetos</span></h2>
+                <p class="lead text-muted">Conheça alguns dos nossos trabalhos mais recentes e descubra como
+                    transformamos ideias em realidade digital.</p>
             </div>
 
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
-                <a href="#" class="text-decoration-none">
-                    <div class="card project-card h-100 border-0 shadow-sm">
-                        <img src="src/img/projetos/projeto2.jpeg" class=" card-img-top" alt="Website de Jogos">
-                        <div class="card-body text-center">
-                            <span class="badge bg-success mb-2">Entretenimento</span>
-                            <h5 class="card-title text-black">PlayOn</h5>
-                            <p style="text-align: justify;">PlayOn é uma instituição voltada para o desenvolvimento de
-                                jogos
-                                indies,
-                                detentora de 3
-                                jogos autorais em sua página, foi o produto final de uma apresentação de projeto final.
+            <!-- Grid de projetos -->
+            <div class="row g-4 justify-content-center mb-5">
+                <!-- Projeto 1: Quantun -->
+                <div class="col-lg-4 col-md-6 fade-in-up delay-1">
+                    <div class="project-card">
+                        <div class="project-image-container">
+                            <img src="src/img/projetos/Captura de tela 2025-08-19 203736.png" class="project-image"
+                                alt="Quantun - Computação Quântica">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <h5 class="mb-3">Ver Projeto</h5>
+                                    <a href="#" class="view-project-btn">
+                                        <i class="bi bi-eye me-2"></i>Visualizar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category category-education">Educação</span>
+                            <h5 class="project-title">Quantun</h5>
+                            <p class="project-description">
+                                Plataforma educacional dedicada à evolução intelectual dos usuários, divulgando
+                                conhecimentos sobre computação quântica e comercializando soluções de automação.
                             </p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">AWS</span>
+                            </div>
                         </div>
                     </div>
-                </a>
-            </div>
+                </div>
 
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-4">
-                <a href="#" class="text-decoration-none">
-                    <div class="card project-card h-100 border-0 shadow-sm">
-                        <img src="src/img/projetos/projeto3.png" class="card-img-top" alt="E-commerce de Roupas">
-                        <div class="card-body text-center">
-                            <span class="badge mb-2" style="background-color: #00bcd4;">Cuidado Pessoal</span>
-
-                            <h5 class="card-title text-black">Site Institucional</h5>
-                            <p style="text-align: justify;">Site institucional criado com o objetivo de apresentar as
-                                terapias da nossa cliente
-                                Alexandra Sarandi, detém painel de controle, serviços fornecidos e nossa curadoria em
-                                redes
-                                suas
-                                sociais!
+                <!-- Projeto 2: PlayOn -->
+                <div class="col-lg-4 col-md-6 fade-in-up delay-2">
+                    <div class="project-card">
+                        <div class="project-image-container">
+                            <img src="src/img/projetos/projeto2.jpeg" class="project-image"
+                                alt="PlayOn - Desenvolvimento de Jogos">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <h5 class="mb-3">Ver Projeto</h5>
+                                    <a href="#" class="view-project-btn">
+                                        <i class="bi bi-eye me-2"></i>Visualizar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category category-entertainment">Entretenimento</span>
+                            <h5 class="project-title">PlayOn</h5>
+                            <p class="project-description">
+                                Instituição voltada para o desenvolvimento de jogos indies, detentora de 3 jogos
+                                autorais. Projeto final apresentado com foco na experiência do usuário.
                             </p>
+                            <div class="tech-stack">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">Javascript</span>
+
+                            </div>
                         </div>
                     </div>
-                </a>
+                </div>
+
+                <!-- Projeto 3: Site Institucional -->
+                <div class="col-lg-4 col-md-6 fade-in-up delay-3">
+                    <div class="project-card">
+                        <div class="project-image-container">
+                            <img src="src/img/projetos/projeto3.png" class="project-image"
+                                alt="Site Institucional - Alexandra Sarandi">
+                            <div class="project-overlay">
+                                <div class="overlay-content">
+                                    <h5 class="mb-3">Ver Projeto</h5>
+                                    <a href="#" class="view-project-btn">
+                                        <i class="bi bi-eye me-2"></i>Visualizar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category category-health">Cuidado Pessoal</span>
+                            <h5 class="project-title">Site Institucional</h5>
+                            <p class="project-description">
+                                Site institucional desenvolvido para apresentar as terapias da cliente Alexandra
+                                Sarandi, com painel de controle, serviços e curadoria em redes sociais.
+                            </p>
+                            <div class="tech-stack">
+
+                                <span class="tech-tag">PHP</span>
+                                <span class="tech-tag">MySQL</span>
+                                <span class="tech-tag">SEO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
