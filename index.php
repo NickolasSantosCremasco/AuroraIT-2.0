@@ -206,6 +206,21 @@ require_once 'src/database/auth.php';
     .feature-card:hover {
         transform: translateY(-5px);
     }
+
+
+    .featured::before {
+        content: 'MAIS POPULAR';
+        position: absolute;
+        top: 30px;
+        left: -40px;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        padding: 8px 40px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        transform: rotate(-45deg);
+        z-index: 2;
+    }
     </style>
 </head>
 
@@ -464,7 +479,8 @@ require_once 'src/database/auth.php';
                 <!-- Card 2 -->
                 <div class="col-lg-4 col-md-6">
                     <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden tour-card">
-                        <div class="position-relative">
+                        <div class="position-relative featured">
+
                             <img src="src/img/card2.jpeg" class="card-img-top" alt="Plano Intermediário"
                                 style="height: 200px; object-fit: cover;">
                             <span
