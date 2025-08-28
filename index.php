@@ -724,7 +724,8 @@ require_once 'src/database/auth.php';
                             <div class="project-overlay">
                                 <div class="overlay-content">
                                     <h5 class="mb-3">Ver Projeto</h5>
-                                    <a href="#" class="view-project-btn">
+                                    <a href="https://nickolassantoscremasco.github.io/Quantun/" target="_blank"
+                                        class="view-project-btn">
                                         <i class="bi bi-eye me-2"></i>Visualizar
                                     </a>
                                 </div>
@@ -756,7 +757,8 @@ require_once 'src/database/auth.php';
                             <div class="project-overlay">
                                 <div class="overlay-content">
                                     <h5 class="mb-3">Ver Projeto</h5>
-                                    <a href="#" class="view-project-btn">
+                                    <a href="https://nickolassantoscremasco.github.io/PlayOn/" target="_blank"
+                                        class="view-project-btn">
                                         <i class="bi bi-eye me-2"></i>Visualizar
                                     </a>
                                 </div>

@@ -1,80 +1,66 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fff;
-  color: #000;
+  background: linear-gradient(to right, #0ab8a1cb, #89d3ddc0);
 }
 
-.contato {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding: 3rem 2rem;
-  gap: 2rem;
+form{
+  background: #89d3ddc0;
 }
 
-.formulario {
-  max-width: 500px;
-  flex: 1;
-}
-
-.formulario h1 {
-  font-size: 2rem;
-  color: #017c74;
-  margin-bottom: 1rem;
-}
-
-.formulario p {
-  margin-bottom: 2rem;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-form label {
-  font-weight: bold;
-}
-
-form input,
-form textarea {
-  padding: 0.8rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-form button {
-  background-color: #017c74;
+.container h3{
   color: #fff;
-  padding: 0.8rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
+  text-align: justify;
+}
+.container h2{
+  color: #fff;
+  text-align: justify;
 }
 
-form button:hover {
-  background-color: #015f5a;
+.container .border{
+  border-radius: 40px;
 }
 
-.info {
-  max-width: 300px;
-  flex: 1;
-  align-self: center;
-  text-align: left;
+.container .form-label{
+  color: #fff;
 }
 
-.info h2 {
-  font-size: 1.1rem;
+.container .form-control{
+  opacity: 0.1;
+}
+
+.container .input-group-text{
+  opacity: 0.2;
+}
+
+.container .input-group-text i{
   color: #000;
-  margin-bottom: 0.8rem;
+  font-size: 20px;
 }
 
-.info p {
-  margin-top: 1rem;
-  color: #555;
+.container button{
+  background:#0ab8a1cb;
+  color: #fff;
+  border: none;
+  transition: 0.5s ease-in-out;
+}
+.container button:hover{
+  background: #0ab8a170;
+  color: #fff;
+  border: 2px #fff  solid;
+  border-radius: 10px;
+  transition: 0.5s ease-in-out;
+}
+
+ .icon{
+  color: #fff;
+  font-size: 50px
+}
+
+.contato h4,p{
+  color: #fff;
+}
+
+.contato a{
+  color: #ffffffc7;
 }
