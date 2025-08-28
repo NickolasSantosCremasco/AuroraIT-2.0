@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'nck.tec.suporte@gmail.com';
-            $mail->Password = 'SUA_SENHA_DE_APP'; 
+            $mail->Password = 'derg wxfe slpa swyf'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->CharSet = 'UTF-8';
@@ -60,7 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit;
             
         } catch (Exception $e) {
-            echo "<script>alert('A mensagem não pôde ser enviada. Erro: {$mail->ErrorInfo}');</script>";
+            $_SESSION['form_message'] = "A mensagem não pôde ser enviada. Erro: {$mail->ErrorInfo}";
+            header('Location: ../pages/faleconosco.php');
+            exit;
         }
     }
 }
