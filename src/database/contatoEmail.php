@@ -1,10 +1,11 @@
 <?php
+require __DIR__ . '../../database/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require_once '../PHPMailer-master/src/PHPMailer.php';
-require_once '../PHPMailer-master/src/Exception.php';
-require_once '../PHPMailer-master/src/SMTP.php'; 
 
 // Apenas executa a lógica de envio se o método for POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,17 +28,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             // Configurações do servidor 
             $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
+            $mail->Host = $_ENV['SMTP_HOST'];
             $mail->SMTPAuth = true;
-            $mail->Username = 'nck.tec.suporte@gmail.com';
-            $mail->Password = 'derg wxfe slpa swyf'; 
+            $mail->Username = $_ENV['SMTP_USERNAME'];
+            $mail->Password = $_ENV['SMTP_PASSWORD'];  
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
             $mail->CharSet = 'UTF-8';
 
             // Destinatários e Remetente
             $mail->setFrom($email, $fullname); 
-            $mail->addAddress('nck.tec.suporte@gmail.com', 'AuroraIT'); 
+            $mail->addAddress($_ENV['SMTP_USERNAME'], 'AuroraIT'); 
             $mail->addReplyTo($email, $fullname); 
 
             // Conteúdo do e-mail

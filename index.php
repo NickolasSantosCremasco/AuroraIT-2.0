@@ -316,9 +316,7 @@ require_once 'src/database/auth.php';
                                     <li class="nav-item">
                                         <a class="nav-link" href="#planos">Planos</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#redes">Redes</a>
-                                    </li>
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="src/pages/faleconosco.php">Fale conosco</a>
                                     </li>
