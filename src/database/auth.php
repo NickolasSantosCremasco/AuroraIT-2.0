@@ -1,20 +1,28 @@
 <?php
 require_once 'config.php';
 
-function registrarUsuario($nome, $email, $senha) {
+function registrarUsuario($dados) {
     global $pdo;
 
-    //Verifica se tem algum campo vazio
-    if(empty($nome) || empty($senha) || empty($email)) {
-        return ['sucesso' => false, 'message'=> 'Todos os campos são obrigatórios.'];
-    };
+    // Extrai os dados do array
+    $nome = $dados['nome'] ?? '';
+    $email = $dados['email'] ?? '';
+    $senha = $dados['senha'] ?? '';
+    $cpf = $dados['cpf'] ?? null;
+    $rg = $dados['rg'] ?? null;
+    $genero = $dados['genero'] ?? null;
+    $caminho_foto = $dados['caminho_foto'] ?? null;
 
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (empty($nome) || empty($email) || empty($senha)) {
+        return ['sucesso' => false, 'message' => 'Nome, e-mail e senha são obrigatórios.'];
+    }
+    
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['sucesso' => false, 'message' => 'Email inválido!'];
     }
 
-    if(strlen($senha)<6) {
-        return ['sucesso' => false, 'message' => 'A senha deve ter o mínimo 6 caractéres.'];
+    if (strlen($senha) < 6) {
+        return ['sucesso' => false, 'message' => 'A senha deve ter o mínimo 6 caracteres.'];
     }
 
     $sql = 'SELECT id FROM usuarios WHERE email = :email';
@@ -27,17 +35,20 @@ function registrarUsuario($nome, $email, $senha) {
     };
 
     //Criptografia da senha
-
     $senhaHash = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
-
     //Inserção no banco
     try {
-        $sql = 'INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)';
+        $sql = 'INSERT INTO usuarios (nome, email, senha, cpf, rg, genero, caminho_foto) 
+                VALUES (:nome, :email, :senha, :cpf, :rg, :genero, :caminho_foto)';
         $stmt = $pdo->prepare($sql);
+        
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':senha', $senhaHash, PDO::PARAM_STR);
-
+        $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);
+        $stmt->bindParam(':cpf', $cpf, PDO::PARAM_STR);
+        $stmt->bindParam(':rg', $rg, PDO::PARAM_STR);
+        $stmt->bindParam(':genero', $genero, PDO::PARAM_STR);
+        $stmt->bindParam(':caminho_foto', $caminho_foto, PDO::PARAM_STR);
         $result = $stmt->execute();
 
         return [

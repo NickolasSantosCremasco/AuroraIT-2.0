@@ -1,9 +1,8 @@
 <?php
 require_once '../database/auth.php';
 require_once '../database/config.php';
-$erro = null;
-$sucesso = null;
 
+$erro = null;
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Filtra e valida os inputs
     $nome = htmlspecialchars(trim($_POST['nome']));
@@ -11,24 +10,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $senha = $_POST['senha'] ?? '';
     $confirmar_senha = $_POST['confirmar_senha'] ?? '';
 
-    //validações
-    if(empty($nome) ||empty($email) || empty($senha)) {
+    // Validações
+    if(empty($nome) || empty($email) || empty($senha)) {
         $erro = "Todos os campos são obrigatórios!";
     } elseif($senha !== $confirmar_senha) {
         $erro = "As senhas não coincidem!";
     } elseif (strlen($senha) < 6) {
         $erro = "A senha deve ter pelo menos 6 caracteres";
     } else {
-        //Tenta registrar o usuário
-        $resultado = registrarUsuario($nome, $email, $senha);
-        
-        if($resultado['sucesso']) {
-            $sucesso = $resultado['message'];
-            //Redireciona após 3 segundos
-            echo '<script>setTimout(function(){window.location.href = "../../index.php";}, 3000);</script>';
-        } else {
-            $erro = $resultado['message'];
-        }
+        // Se a validação for um sucesso...
+        // Armazena os dados da primeira etapa na sessão
+        $_SESSION['cadastro']['nome'] = $nome;
+        $_SESSION['cadastro']['email'] = $email;
+        $_SESSION['cadastro']['senha'] = password_hash($senha, PASSWORD_DEFAULT); // Armazena a senha já com hash
+
+        // Redireciona para a próxima etapa
+        header('Location: cadastro_etapa2.php');
+        exit();
     }
 }
 
@@ -57,12 +55,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?= htmlspecialchars($erro) ?>
             </div>
             <?php endif; ?>
-
-            <?php if($sucesso): ?>
-            <div class="alert alert-success">
-                <?= htmlspecialchars($sucesso) ?>
-            </div>
-            <?php endif; ?>
             <form action="../pages/cadastro.php" method="POST">
                 <div class="mb-3">
                     <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome" required>
@@ -78,11 +70,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         placeholder="Confirmar Senha" required>
                 </div>
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe" style="color:#6c757d;">Me lembre</label>
-                    </div>
-                    <a href="#" class="text-decoration-none" style="color:#00C9B1;">Esqueceu?</a>
 
                 </div>
                 <button type="submit" class="btn btn-login w-100"
