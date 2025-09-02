@@ -91,10 +91,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?= htmlspecialchars($erro) ?> </div> <?php endif; ?> <form action="" method="POST"
                 enctype="multipart/form-data">
                 <div class="mb-3">
-                    <input type="text" class="form-control" name="cpf" id="cpf" placeholder="CPF" required>
+                    <input type="text" class="form-control cpf-mask" name="cpf" id="cpf" placeholder="CPF" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" name="rg" id="rg" placeholder="RG" required>
+                    <input type="text" class="form-control rg-mask" name="rg" id="rg" placeholder="RG" required>
                 </div>
                 <div class="mb-3"> <select class="form-control" name="genero" id="genero" required>
                         <option value="">Selecione o Gênero</option>
@@ -119,6 +119,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <script src="../js/masks.js"></script>
 </body>
 
 </html>

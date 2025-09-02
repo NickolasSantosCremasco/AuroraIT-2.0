@@ -11,9 +11,9 @@ $usuario_id = $_SESSION['usuario']['id'];
 $nivel = $_SESSION['usuario']['nivel'];
 
 if ($nivel == 1) {
-    $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, nivel, data_criacao FROM usuarios ORDER BY nome ASC');
+    $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, nivel, rg, cpf, genero, data_criacao FROM usuarios ORDER BY nome ASC');
     $stmtUsuarios->execute();
-     $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
+    $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
 } 
 ?>
 <!DOCTYPE html>
@@ -107,7 +107,7 @@ if ($nivel == 1) {
             <!-- Main Content -->
             <main class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h1 class="fs-3 fw-semibold">Usuarios</h1>
+                    <h1 class="fs-3 fw-semibold">Dashboard</h1>
                     <div class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Procurar Usuário"
                             aria-label="Search" id="searchUsuario">
@@ -122,15 +122,28 @@ if ($nivel == 1) {
                 </div>
 
                 <?php if($nivel == 1):?>
+                <div>
+                    <div>
+                        <!--Quantidade de Usuarios-->
+                    </div>
+                    <div>
+                        <!--Quantidade de Admins-->
+                    </div>
+                    <div>
+                        <!--Serviços Pendente-->
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>CPF</th>
+                                <th>RG</th>
+                                <th>Gênero</th>
                                 <th>Membro desde</th>
                                 <th>Nível</th>
-
                             </tr>
                         </thead>
                         <tbody class="usuarios">
@@ -141,6 +154,15 @@ if ($nivel == 1) {
                                 </td>
                                 <td>
                                     <?= htmlspecialchars($usuario['email'])?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($usuario['cpf'])?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($usuario['rg'])?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($usuario['genero'])?>
                                 </td>
                                 <td>
                                     <?php  
@@ -210,19 +232,26 @@ if ($nivel == 1) {
                     year: 'numeric'
                 });
 
+                const cpfDisplay = usuario.cpf ? usuario.cpf : 'N/A';
+                const rgDisplay = usuario.rg ? usuario.rg : 'N/A';
+                const generoDisplay = usuario.genero ? usuario.genero : 'N/A';
+
                 html += `
                 <tr class="btn-usuario" data-id="${usuario.id}" style="cursor: pointer;">
-                    <td>${usuario.nome}</td>
-                    <td>${usuario.email}</td>
-                    <td>${dataFormatada}</td>
-                    <td><span class="badge bg-success">${usuario.nivel}</span></td>
-                </tr>
+                <td>${usuario.nome}</td>
+                <td>${usuario.email}</td>
+                <td>${cpfDisplay}</td>
+                <td>${rgDisplay}</td>
+                <td>${generoDisplay}</td>
+                <td>${dataFormatada}</td>
+                <td><span class="badge bg-success">${usuario.nivel}</span></td>
+            </tr>
                 `;
             });
         } else {
             html = `
             <tr>
-                <td colspan="4" class="text-center">Nenhum usuário encontrado.</td>
+                <td colspan="7" class="text-center">Nenhum usuário encontrado.</td>
             </tr>
             `;
         }
@@ -244,7 +273,10 @@ if ($nivel == 1) {
             return (
                 usuario.nome.toLowerCase().includes(termo) ||
                 usuario.email.toLowerCase().includes(termo) ||
-                usuario.nivel.toString().includes(termo)
+                usuario.nivel.toString().includes(termo) ||
+                usuario.genero.toLowerCase().includes(termo) ||
+                usuario.rg.toString().includes(termo) ||
+                usuario.cpf.toString().includes(termo)
             );
         });
 
