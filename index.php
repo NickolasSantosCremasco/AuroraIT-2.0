@@ -337,6 +337,19 @@ require_once 'src/database/auth.php';
 
                                 <?php if(estaLogado()) : ?>
                                 <!-- Mostra a imagem do usuário logado (apenas em desktop) -->
+                                <?php if($_SESSION['usuario']['nivel'] == 0):?>
+                                <div class="d-none d-lg-flex align-items-center ms-4">
+                                    <a href="src/pages/perfilUsuario.php"
+                                        class="perfil d-flex align-items-center text-decoration-none">
+                                        <img src="src/img/icono-usuario_126283-435.avif"
+                                            class="border rounded-circle me-2" alt="Usuário"
+                                            style="width: 40px; height: 40px;">
+                                        <span
+                                            class="fw-bold text-white"><?php echo ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]) ?></span>
+                                    </a>
+                                </div>
+
+                                <?php elseif($_SESSION['usuario']['nivel'] == 1):?>
                                 <div class="d-none d-lg-flex align-items-center ms-4">
                                     <a href="src/pages/perfil.php"
                                         class="perfil d-flex align-items-center text-decoration-none">
@@ -347,6 +360,8 @@ require_once 'src/database/auth.php';
                                             class="fw-bold text-white"><?php echo ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]) ?></span>
                                     </a>
                                 </div>
+                                <?php endif?>
+
                                 <?php else : ?>
                                 <div class="d-none d-lg-block ms-4">
                                     <a href="src/pages/login.php" class="btn btn-outline-light">Login</a>
