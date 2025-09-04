@@ -199,6 +199,7 @@ if ($nivel == 1) {
     const tabelaUsuariosContainer = document.querySelector('.table-responsive');
     const btnAgendarServico = document.getElementById('btnAgendarServico');
     const servicosUsuarioContainer = document.getElementById('servicosUsuario');
+    const cabecalhoTabelaUsuarios = document.querySelector('.table-light')
 
     // Variável para armazenar todos os usuários inicialmente carregados
     let todosUsuarios = [];
@@ -296,6 +297,7 @@ if ($nivel == 1) {
     function selecionarUsuario() {
         btnAgendarServico.classList.remove('d-none');
         tabelaUsuarios.classList.add('d-none');
+        cabecalhoTabelaUsuarios.classList.add('d-none')
 
         const userId = this.getAttribute('data-id');
         document.getElementById('usuarioSelecionadoId').value = userId;
@@ -312,29 +314,50 @@ if ($nivel == 1) {
                 if (data.length > 0) {
                     html += `
                     <div class="alert alert-info">
-                        Veja os Serviços pendentes a seguir!
-                        <i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar">Voltar</i>
+                        <span class="fw-bold">Serviços Pendentes:</span> Veja os serviços em andamento para este usuário!
+                        <i class="fas fa-arrow-left float-end" style="font-size:8pt; margin-top:8px;cursor:pointer;" id="voltar"> Voltar</i>
                     </div>
-                    <ul class="list-group">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Tipo de Serviço</th>
+                                <th>Data de Início</th>
+                                <th>Data de Término</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th>Ações</th>  
+                            </tr>
+                        </thead>
+                    <tbody>
                     `;
                     data.forEach(servico => {
                         html += `
-                        <li class="list-group-item">
-                            <strong>Tipo Serviço:</strong> ${servico.tipo_servico}<br>
-                            <strong>Data de Início:</strong> ${servico.data_inicio}<br>
-                            <strong>Data de Término:</strong> ${servico.data_termino}<br>
-                            <div class="mt-2">
-                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarConsulta(${servico.userId})">
+                        <tr>
+                            <td>${servico.tipo_servico}</td>
+                            <td>${servico.data_inicio}</td>
+                            <td>${servico.data_termino}</td>
+                            <td>${servico.valor || 'N/A'}</td>
+                            <td><select class="form-select" onchange="atualizarStatus(${servico.id}, this.value)">
+                                <option value="Em Andamento" ${servico.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
+                                <option value="Concluído" ${servico.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
+                                <option value="Cancelado" ${servico.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                            </select>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarConsulta(${servico.id})">
                                     <i class="fas fa-edit me-1"></i> Remarcar
                                 </button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.userId})">
+                                <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
                                     <i class="fas fa-times me-1"></i> Cancelar
                                 </button>
-                            </div>
-                        </li>
+                            </td>
+                        </tr>
                         `;
                     });
-                    html += `</ul>`;
+                    html += ` 
+                        </tbody>
+                    </table>
+                    `;
                 } else {
                     html = `
                     <div class="alert alert-warning" id="avisoConsulta">
@@ -351,6 +374,7 @@ if ($nivel == 1) {
                     servicosUsuarioContainer.classList.add('d-none');
                     tabelaUsuarios.classList.remove('d-none');
                     btnAgendarServico.classList.add('d-none');
+                    cabecalhoTabelaUsuarios.classList.remove('d-none')
                     searchInput.value = ''; // Limpa a pesquisa ao voltar
                     filtrarUsuarios(''); // Mostra todos os usuários novamente
                 });

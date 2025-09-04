@@ -1,6 +1,46 @@
 <?php
 require_once '../database/auth.php';
 require_once '../database/config.php';
+
+if (!estaLogado()) {
+    header('Location: login.php');
+    exit;
+}
+
+$usuario_id = $_SESSION['usuario']['id'];
+
+$stmtUsuarioServico = $pdo->prepare('SELECT * FROM servico WHERE usuario_id = :usuario_id');
+$stmtUsuarioServico->execute([
+    ':usuario_id' => $usuario_id
+]);
+$usuarioServico = $stmtUsuarioServico->fetchAll(PDO::FETCH_ASSOC);
+
+$dataCriacao = new DateTime($_SESSION['usuario']['data_criacao']);
+
+// Array para traduzir os meses
+$meses = array(
+    'January' => 'janeiro',
+    'February' => 'fevereiro',
+    'March' => 'março',
+    'April' => 'abril',
+    'May' => 'maio',
+    'June' => 'junho',
+    'July' => 'julho',
+    'August' => 'agosto',
+    'September' => 'setembro',
+    'October' => 'outubro',
+    'November' => 'novembro',
+    'December' => 'dezembro'
+);
+
+$mes = $dataCriacao->format('F');
+$mes_pt = $meses[$mes];
+
+$stmtTotalServicos = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE usuario_id = :usuario_id ');
+$stmtTotalServicos->execute([
+    ':usuario_id' => $usuario_id
+]);
+$totalServicos = $stmtTotalServicos->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -25,15 +65,24 @@ require_once '../database/config.php';
             <div class="profile-section">
                 <div class="profile-avatar">JD</div>
                 <div class="profile-info">
-                    <h1>Jane Doe</h1>
-                    <p>jane.doe@example.com</p>
+                    <h1><?= $_SESSION['usuario']['nome']?></h1>
+                    <p><?= $_SESSION['usuario']['email']?></p>
                     <p>+1 234 567 8900</p>
-                    <p>Cliente desde: Janeiro 2024</p>
+                    <p> Membro desde:
+                        <?= 
+                            $dataCriacao->format('d \d\e ') . $mes_pt . $dataCriacao->format(' \d\e Y')
+                        ?>
+                    </p>
+                    <a class="btn-sair" href="../database/logout.php">
+                        <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
+                    </a>
                 </div>
+
             </div>
+
             <div class="profile-stats">
                 <div class="stat-card">
-                    <span class="stat-number">4</span>
+                    <span class="stat-number"><?= $totalServicos ?></span>
                     <span class="stat-label">Projetos Totais</span>
                 </div>
                 <div class="stat-card">
@@ -133,7 +182,7 @@ require_once '../database/config.php';
                         </div>
                         <div class="service-actions">
                             <button class="btn btn-primary">🌐 Acessar Site</button>
-                            <button class="btn btn-secondary">📊 Relatórios</button>
+
                         </div>
                     </div>
 
@@ -173,13 +222,10 @@ require_once '../database/config.php';
                         <a href="#" class="action-btn">
                             <span>➕</span> Novo Projeto
                         </a>
-                        <a href="#" class="action-btn"
-                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                            <span>💬</span> Suporte
-                        </a>
+
                         <a href="#" class="action-btn"
                             style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                            <span>📊</span> Relatórios
+                            <span>📊</span> Importar CSV
                         </a>
                     </div>
                 </div>
@@ -221,24 +267,6 @@ require_once '../database/config.php';
                                 <div class="activity-title">Avaliação de 5 estrelas recebida</div>
                                 <div class="activity-time">3 dias atrás</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar-card">
-                    <h3 class="section-title">Próximas Entregas</h3>
-                    <div class="activity-item">
-                        <div class="activity-icon">📅</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Site Advocacia - Revisão Final</div>
-                            <div class="activity-time">Em 3 dias</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-icon">🎯</div>
-                        <div class="activity-content">
-                            <div class="activity-title">Treinamento de uso do painel</div>
-                            <div class="activity-time">Em 5 dias</div>
                         </div>
                     </div>
                 </div>
