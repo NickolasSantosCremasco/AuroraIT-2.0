@@ -16,15 +16,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cpf = htmlspecialchars(trim($_POST['cpf'] ?? ''));
     $rg = htmlspecialchars(trim($_POST['rg'] ?? ''));
     $genero = htmlspecialchars(trim($_POST['genero'] ?? ''));
+    $numero = htmlspecialchars(trim($_POST['numero'] ?? ''));
 
     // Validações
-    if (empty($cpf) || empty($rg) || empty($genero)) {
+    if (empty($cpf) || empty($rg) || empty($genero) || empty($numero)) {
         $erro = "Todos os campos são obrigatórios!";
     } else {
-        // Armazena os novos dados na sessão
+        // Armazena dados na sessão
         $_SESSION['cadastro']['cpf'] = $cpf;
         $_SESSION['cadastro']['rg'] = $rg;
         $_SESSION['cadastro']['genero'] = $genero;
+        $_SESSION['cadastro']['numero'] = $numero;
         
         // Tratamento do upload da foto
         $caminho_foto = null;
@@ -96,6 +98,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <input type="text" class="form-control rg-mask" name="rg" id="rg" placeholder="RG" required>
                 </div>
+                <div class="mb-3">
+                    <input type="tel" class="form-control number-mask" name="numero" id="numero" placeholder="Número"
+                        required>
+                </div>
                 <div class="mb-3"> <select class="form-control" name="genero" id="genero" required>
                         <option value="">Selecione o Gênero</option>
                         <option value="masculino">Masculino</option>
@@ -108,6 +114,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label for="perfil" class="form-label">Foto de Perfil</label>
                     <input type="file" class="form-control" name="perfil" id="perfil">
                 </div>
+
                 <button type="submit" class="btn btn-login w-100" style="background-color: #00C9B1;">Concluir
                     Cadastro
                 </button>

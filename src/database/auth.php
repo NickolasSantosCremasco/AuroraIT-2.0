@@ -11,6 +11,7 @@ function registrarUsuario($dados) {
     $cpf = $dados['cpf'] ?? null;
     $rg = $dados['rg'] ?? null;
     $genero = $dados['genero'] ?? null;
+    $numero = $dados['numero'] ?? null;
     $caminho_foto = $dados['caminho_foto'] ?? null;
 
     if (empty($nome) || empty($email) || empty($senha)) {
@@ -38,12 +39,13 @@ function registrarUsuario($dados) {
     $senhaHash = password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
     //Inserção no banco
     try {
-        $sql = 'INSERT INTO usuarios (nome, email, senha, cpf, rg, genero, caminho_foto) 
+        $sql = 'INSERT INTO usuarios (nome, email, numero, senha, cpf, rg, genero, caminho_foto) 
                 VALUES (:nome, :email, :senha, :cpf, :rg, :genero, :caminho_foto)';
         $stmt = $pdo->prepare($sql);
         
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':numero', $numero, PDO::PARAM_STR);
         $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);
         $stmt->bindParam(':cpf', $cpf, PDO::PARAM_STR);
         $stmt->bindParam(':rg', $rg, PDO::PARAM_STR);

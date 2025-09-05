@@ -11,7 +11,7 @@ $usuario_id = $_SESSION['usuario']['id'];
 $nivel = $_SESSION['usuario']['nivel'];
 
 if ($nivel == 1) {
-    $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, nivel, rg, cpf, genero, data_criacao FROM usuarios ORDER BY nome ASC');
+    $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, numero, nivel, rg, cpf, genero, data_criacao FROM usuarios ORDER BY nome ASC');
     $stmtUsuarios->execute();
     $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
 } 
@@ -139,6 +139,7 @@ if ($nivel == 1) {
                             <tr>
                                 <th>Nome</th>
                                 <th>Email</th>
+                                <th>Numero</th>
                                 <th>CPF</th>
                                 <th>RG</th>
                                 <th>Gênero</th>
@@ -154,6 +155,9 @@ if ($nivel == 1) {
                                 </td>
                                 <td>
                                     <?= htmlspecialchars($usuario['email'])?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($usuario['numero'] ?? 'Não informado') ?>
                                 </td>
                                 <td>
                                     <?= htmlspecialchars($usuario['cpf'])?>
@@ -241,6 +245,7 @@ if ($nivel == 1) {
                 <tr class="btn-usuario" data-id="${usuario.id}" style="cursor: pointer;">
                 <td>${usuario.nome}</td>
                 <td>${usuario.email}</td>
+                <td>${usuario.numero}</td>
                 <td>${cpfDisplay}</td>
                 <td>${rgDisplay}</td>
                 <td>${generoDisplay}</td>
@@ -252,7 +257,7 @@ if ($nivel == 1) {
         } else {
             html = `
             <tr>
-                <td colspan="7" class="text-center">Nenhum usuário encontrado.</td>
+                <td colspan="8" class="text-center">Nenhum usuário encontrado.</td>
             </tr>
             `;
         }
@@ -276,6 +281,7 @@ if ($nivel == 1) {
                 usuario.email.toLowerCase().includes(termo) ||
                 usuario.nivel.toString().includes(termo) ||
                 usuario.genero.toLowerCase().includes(termo) ||
+                usuario.numero.toString().includes(termo) ||
                 usuario.rg.toString().includes(termo) ||
                 usuario.cpf.toString().includes(termo)
             );
