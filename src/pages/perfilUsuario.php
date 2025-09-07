@@ -31,9 +31,8 @@ $stmtTotalServicosConcluidos->execute([
     ':usuario_id' => $usuario_id
 ]);
 
-$stmtTotalValorServicosConcluidos = $pdo->prepare('SELECT tipo_servico FROM servico WHERE status = :status AND usuario_id = :usuario_id');
-$stmtTotalValorServicosConcluidos->execute([
-    ':status' => 'Concluido',
+$stmtTotalGastoEmServicos = $pdo->prepare('SELECT SUM(ts.valor) AS total_gasto FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE  s.usuario_id = :usuario_id');
+$stmtTotalGastoEmServicos->execute([
     ':usuario_id' => $usuario_id
 ]);
 
@@ -42,6 +41,9 @@ $usuarioServico = $stmtUsuarioServico->fetchAll(PDO::FETCH_ASSOC);
 $totalServicos = $stmtTotalServicos->fetchColumn();
 $TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
 $TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
+$TotalGasto = $stmtTotalGastoEmServicos->fetchColumn();
+
+$TotalGastoFormatado = number_format($TotalGasto, 2 , ',', '.');
 
 $dataCriacao = new DateTime($_SESSION['usuario']['data_criacao']);
 
@@ -119,7 +121,9 @@ $mes_pt = $meses[$mes];
                     <span class="stat-label">Concluídos</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">R$ 12.500</span>
+                    <span class="stat-number">R$
+                        <?=$TotalGastoFormatado?>
+                    </span>
                     <span class="stat-label">Investimento Total</span>
                 </div>
             </div>
