@@ -15,11 +15,11 @@ require_once '../database/auth.php';
 
 
 $usuario_id = filter_input(INPUT_POST, 'usuario_id', FILTER_VALIDATE_INT);
-$tipoServico = htmlspecialchars($_POST['tipoServico']);
+$tipoServicoId = filter_input(INPUT_POST, 'tipoServicoId', FILTER_VALIDATE_INT);
 $dataTermino = htmlspecialchars($_POST['dataTermino']);
 
 //Validação Básica
- if (empty($tipoServico) || empty($dataTermino)) {
+ if (empty($tipoServicoId) || empty($dataTermino)) {
     die('Todos os campos são obrigatórios.');
  }
 
@@ -28,10 +28,10 @@ $dataTermino = htmlspecialchars($_POST['dataTermino']);
  }
  //Conecta ao banco e insere os dados
  try {
-    $stmt = $pdo->prepare('INSERT INTO servico (usuario_id, tipo_servico, data_termino) VALUES (:usuario_id, :tipo_servico, :data_termino)');
+    $stmt = $pdo->prepare('INSERT INTO servico (usuario_id, tipo_servico_id, data_termino) VALUES (:usuario_id, :tipo_servico_id, :data_termino)');
     $stmt->execute([
         ':usuario_id' => $usuario_id,
-        ':tipo_servico' => $tipoServico,
+        ':tipo_servico_id' => $tipoServicoId,
         ':data_termino' => $dataTermino,
    
     ]);

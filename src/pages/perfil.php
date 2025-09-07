@@ -50,11 +50,11 @@ if ($nivel == 1) {
                 <form id="formAgendamento" method="post" action="../database/criarServico.php">
                     <div class="mb-3">
                         <label for="tipoServico" class="form-label">Tipo de Servico</label>
-                        <select class="form-select" name="tipoServico" id="tipoServico" required>
+                        <select class="form-select" name="tipoServicoId" id="tipoServico" required>
                             <option value="">Selecione uma opção</option>
-                            <option value="Plano Básico">Plano Básico</option>
-                            <option value="Plano Intermediário">Plano Intermediário</option>
-                            <option value="PlanoAvancado">Plano Avançado</option>
+                            <option value="1">Plano Básico</option>
+                            <option value="2">Plano Intermediário</option>
+                            <option value="3">Plano Avançado</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -339,11 +339,12 @@ if ($nivel == 1) {
                     data.forEach(servico => {
                         html += `
                         <tr>
-                            <td>${servico.tipo_servico}</td>
+                            <td>${servico.nome_tipo}</td>
                             <td>${servico.data_inicio}</td>
                             <td>${servico.data_termino}</td>
-                            <td>${servico.valor || 'N/A'}</td>
-                            <td><select class="form-select" onchange="atualizarStatus(${servico.id}, this.value)">
+                            <td>R$ ${parseFloat(servico.valor).toFixed(2).replace('.', ',')}</td>
+                            <td>
+                            <select class="form-select" onchange="atualizarStatus(${servico.id}, this.value)">
                                 <option value="Em Andamento" ${servico.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
                                 <option value="Concluído" ${servico.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
                                 <option value="Cancelado" ${servico.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>

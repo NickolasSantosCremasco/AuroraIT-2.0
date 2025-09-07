@@ -13,11 +13,38 @@ $stmtUsuarioServico = $pdo->prepare('SELECT * FROM servico WHERE usuario_id = :u
 $stmtUsuarioServico->execute([
     ':usuario_id' => $usuario_id
 ]);
+
+$stmtTotalServicos = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE usuario_id = :usuario_id ');
+$stmtTotalServicos->execute([
+    ':usuario_id' => $usuario_id
+]);
+
+$stmtTotalServicosEmAndamento = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE status = :status AND usuario_id = :usuario_id');
+$stmtTotalServicosEmAndamento->execute([
+    ':status' => 'Em Andamento',
+    ':usuario_id' => $usuario_id
+]);
+
+$stmtTotalServicosConcluidos = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE status = :status AND usuario_id = :usuario_id');
+$stmtTotalServicosConcluidos->execute([
+    ':status' => 'Concluido',
+    ':usuario_id' => $usuario_id
+]);
+
+$stmtTotalValorServicosConcluidos = $pdo->prepare('SELECT tipo_servico FROM servico WHERE status = :status AND usuario_id = :usuario_id');
+$stmtTotalValorServicosConcluidos->execute([
+    ':status' => 'Concluido',
+    ':usuario_id' => $usuario_id
+]);
+
+
 $usuarioServico = $stmtUsuarioServico->fetchAll(PDO::FETCH_ASSOC);
+$totalServicos = $stmtTotalServicos->fetchColumn();
+$TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
+$TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
 
 $dataCriacao = new DateTime($_SESSION['usuario']['data_criacao']);
 
-// Array para traduzir os meses
 $meses = array(
     'January' => 'janeiro',
     'February' => 'fevereiro',
@@ -36,11 +63,6 @@ $meses = array(
 $mes = $dataCriacao->format('F');
 $mes_pt = $meses[$mes];
 
-$stmtTotalServicos = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE usuario_id = :usuario_id ');
-$stmtTotalServicos->execute([
-    ':usuario_id' => $usuario_id
-]);
-$totalServicos = $stmtTotalServicos->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +73,7 @@ $totalServicos = $stmtTotalServicos->fetchColumn();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil do Usuário - Aurora IT</title>
     <link rel="stylesheet" href="../css/perfilUsuario.css">
+    <link rel="shortcut icon" href="../img/favicon/favicon.png" type="image/x-icon">
 </head>
 
 <body>
@@ -63,11 +86,11 @@ $totalServicos = $stmtTotalServicos->fetchColumn();
     <div class="container">
         <div class="header">
             <div class="profile-section">
-                <div class="profile-avatar">JD</div>
+                <div class="profile-avatar"> <?= htmlspecialchars(substr($_SESSION['usuario']['nome'], 0, 2)) ?></div>
                 <div class="profile-info">
-                    <h1><?= $_SESSION['usuario']['nome']?></h1>
-                    <p><?= $_SESSION['usuario']['email']?></p>
-                    <p>+1 234 567 8900</p>
+                    <h1><?= htmlspecialchars($_SESSION['usuario']['nome'])?></h1>
+                    <p><?= htmlspecialchars($_SESSION['usuario']['email'])?></p>
+                    <p><?= htmlspecialchars($_SESSION['usuario']['numero'])?></p>
                     <p> Membro desde:
                         <?= 
                             $dataCriacao->format('d \d\e ') . $mes_pt . $dataCriacao->format(' \d\e Y')
@@ -86,11 +109,13 @@ $totalServicos = $stmtTotalServicos->fetchColumn();
                     <span class="stat-label">Projetos Totais</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">1</span>
+                    <span class="stat-number">
+                        <?=$TotalServicosEmAndamento?>
+                    </span>
                     <span class="stat-label">Em Andamento</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-number">3</span>
+                    <span class="stat-number"><?= $TotalServicosConcluidos?></span>
                     <span class="stat-label">Concluídos</span>
                 </div>
                 <div class="stat-card">
