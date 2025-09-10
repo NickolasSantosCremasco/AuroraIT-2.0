@@ -134,22 +134,24 @@ $mes_pt = $meses[$mes];
                 <h2 class="section-title">Meus Serviços</h2>
 
                 <div class="services-grid">
+                    <?php foreach ($usuarioServico as $servico):?>
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-title">
                                 <div class="service-icon">🚀</div>
-                                <span>Site Institucional - Advocacia Premium</span>
+                                <span><?= $servico['tipo_servico_id']?></span>
                             </div>
-                            <span class="status-badge status-in-progress">Em Andamento</span>
+                            <span class="status-badge status-in-progress"><?= $servico['status']?></span>
                         </div>
                         <div class="service-details">
-                            Site institucional completo com design moderno, sistema de agendamento de consultas e blog
+                            Site institucional completo com design moderno, sistema de agendamento de consultas e
+                            blog
                             integrado. Inclui otimização SEO e responsividade total.
                         </div>
                         <div class="service-progress">
                             <div class="progress-label">
                                 <span>Progresso: 75%</span>
-                                <span>Entrega: 15/09/2025</span>
+                                <span>Entrega: <?= $servico['data_termino']?></span>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 75%"></div>
@@ -160,6 +162,8 @@ $mes_pt = $meses[$mes];
                             <button class="btn btn-secondary">💬 Chat</button>
                         </div>
                     </div>
+                    <?php endforeach?>
+
 
                     <div class="service-card">
                         <div class="service-header">
@@ -170,7 +174,8 @@ $mes_pt = $meses[$mes];
                             <span class="status-badge status-completed">Concluído</span>
                         </div>
                         <div class="service-details">
-                            Loja virtual completa com sistema de pagamento, gestão de estoque, painel administrativo e
+                            Loja virtual completa com sistema de pagamento, gestão de estoque, painel administrativo
+                            e
                             integração com correios para cálculo de frete.
                         </div>
                         <div class="service-progress">
@@ -197,7 +202,8 @@ $mes_pt = $meses[$mes];
                             <span class="status-badge status-completed">Concluído</span>
                         </div>
                         <div class="service-details">
-                            Landing page otimizada para conversão com formulários integrados, player de vídeo, sistema
+                            Landing page otimizada para conversão com formulários integrados, player de vídeo,
+                            sistema
                             de checkout e integração com plataformas de pagamento.
                         </div>
                         <div class="service-progress">
