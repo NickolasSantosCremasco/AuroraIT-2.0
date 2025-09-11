@@ -72,6 +72,39 @@ if ($nivel == 1) {
     </div>
 </div>
 
+<!-- Modal para Adicionar Comentários -->
+<div class="modal fade" id="modalAdicionarComentario" tabindex="-1" aria-labelledby="modalAdicionarComentarioLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAdicionarComentarioLabel"><i class="fas fa-plus me-2"></i>Adicionar
+                    Comentários Do Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formAdicionarComentario" method="post" action="../database/adicionarComentario.php">
+                    <div class="mb-3">
+                        <label for="Comentario" class="form-label">Adicione o Título do Projeto:</label>
+                        <text class="form-control" name="titulo" id="titulo" rows="4" required></text>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Comentario" class="form-label">Adicione um Comentário ao Projeto:</label>
+                        <textarea class="form-control" name="comentario" id="comentario" rows="4" required></textarea>
+                    </div>
+
+                    <input type="hidden" name="servico_id" id="servicoIdComentario">
+                    <input type="hidden" name="usuario_id" id="usuarioIdComentario">
+
+                    <button type="submit" class="btn btn-vinho w-100">
+                        <i class="fas fa-check me-1"></i> Confirmar Comentário
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <body>
 
     <!---->
@@ -357,6 +390,9 @@ if ($nivel == 1) {
                                 <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
                                     <i class="fas fa-times me-1"></i> Cancelar
                                 </button>
+                                <button class="btn btn-sm btn-outline-primary" onclick="adicionarComentario(${servico.id})">
+                                    <i class="fas fa-times me-1"></i> Adicionar Comentário
+                                </button>
                             </td>
                         </tr>
                         `;
@@ -429,6 +465,11 @@ if ($nivel == 1) {
                 }
             })
             .catch(err => alert('Erro na requisição: ' + err));
+    }
+
+    function adicionarComentario() {
+        const modal = new bootstrap.Modal(document.getElementById('modalAdicionarComentario'));
+        modal.show();
     }
     </script>
 </body>

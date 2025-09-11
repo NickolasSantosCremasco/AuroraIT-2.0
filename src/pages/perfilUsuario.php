@@ -9,8 +9,8 @@ if (!estaLogado()) {
 
 $usuario_id = $_SESSION['usuario']['id'];
 
-$stmtUsuarioServico = $pdo->prepare('SELECT * FROM servico WHERE usuario_id = :usuario_id');
-$stmtUsuarioServico->execute([
+$stmtMeusServicos = $pdo->prepare('SELECT s.*, ts.nome_tipo, ts.valor FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.usuario_id = :usuario_id');
+$stmtMeusServicos->execute([
     ':usuario_id' => $usuario_id
 ]);
 
@@ -36,8 +36,7 @@ $stmtTotalGastoEmServicos->execute([
     ':usuario_id' => $usuario_id
 ]);
 
-
-$usuarioServico = $stmtUsuarioServico->fetchAll(PDO::FETCH_ASSOC);
+$meusServicos = $stmtMeusServicos->fetchAll(PDO::FETCH_ASSOC);
 $totalServicos = $stmtTotalServicos->fetchColumn();
 $TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
 $TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
@@ -134,14 +133,25 @@ $mes_pt = $meses[$mes];
                 <h2 class="section-title">Meus Serviços</h2>
 
                 <div class="services-grid">
-                    <?php foreach ($usuarioServico as $servico):?>
+                    <?php foreach ($meusServicos as $servico):?>
                     <div class="service-card">
                         <div class="service-header">
                             <div class="service-title">
                                 <div class="service-icon">🚀</div>
-                                <span><?= $servico['tipo_servico_id']?></span>
+                                <span><?= $servico['nome_tipo']?></span>
                             </div>
-                            <span class="status-badge status-in-progress"><?= $servico['status']?></span>
+
+                            <?php if($servico['status'] === 'Em Andamento'):?>
+                            <span class="status-badge status-in-progress">
+                                <?= $servico['status']?>
+                            </span>
+                            <?php elseif($servico['status'] ==='Concluido'):?>
+                            <span class="status-badge status-completed">
+                                <?= $servico['status']?>
+                            </span>
+                            <?php endif?>
+
+
                         </div>
                         <div class="service-details">
                             Site institucional completo com design moderno, sistema de agendamento de consultas e
@@ -159,7 +169,7 @@ $mes_pt = $meses[$mes];
                         </div>
                         <div class="service-actions">
                             <button class="btn btn-primary">📋 Ver Detalhes</button>
-                            <button class="btn btn-secondary">💬 Chat</button>
+
                         </div>
                     </div>
                     <?php endforeach?>
@@ -171,7 +181,7 @@ $mes_pt = $meses[$mes];
                                 <div class="service-icon">✅</div>
                                 <span>E-commerce - Loja Virtual</span>
                             </div>
-                            <span class="status-badge status-completed">Concluído</span>
+
                         </div>
                         <div class="service-details">
                             Loja virtual completa com sistema de pagamento, gestão de estoque, painel administrativo
