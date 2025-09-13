@@ -36,11 +36,18 @@ $stmtTotalGastoEmServicos->execute([
     ':usuario_id' => $usuario_id
 ]);
 
+$stmtComentarios = $pdo->prepare('SELECT c.*, u.nome AS nome_autor FROM comentarios c JOIN servico s ON c.servico_id = s.id JOIN usuarios u ON c.usuario_id = u.id WHERE s.usuario_id = :usuario_id ORDER BY c.data_criacao DESC');
+
+$stmtComentarios->execute([
+    ':usuario_id' => $usuario_id
+]);
+
 $meusServicos = $stmtMeusServicos->fetchAll(PDO::FETCH_ASSOC);
 $totalServicos = $stmtTotalServicos->fetchColumn();
 $TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
 $TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
 $TotalGasto = $stmtTotalGastoEmServicos->fetchColumn();
+$comentariosDoServico = $stmtComentarios->fetchAll(PDO::FETCH_ASSOC);
 
 $TotalGastoFormatado = number_format($TotalGasto, 2 , ',', '.');
 
@@ -154,14 +161,31 @@ $mes_pt = $meses[$mes];
 
                         </div>
                         <div class="service-details">
-                            Site institucional completo com design moderno, sistema de agendamento de consultas e
-                            blog
-                            integrado. Inclui otimização SEO e responsividade total.
+                            <?php foreach ($comentariosDoServico as $comentario):?>
+
+                            <?php if ($comentario['servico_id']===$servico['id']): ?>
+                            <div class="comentario">
+
+                                <p><?= nl2br(htmlspecialchars($comentario['titulo_comentario'])) ?></p>
+                                <p><?= nl2br(htmlspecialchars($comentario['comentario'])) ?></p>
+                                <small>Criado em: <?= htmlspecialchars($comentario['data_criacao']) ?></small>
+                            </div>
+                            <hr>
+                            <?php endif;?>
+                            <?php endforeach;?>
                         </div>
                         <div class="service-progress">
                             <div class="progress-label">
                                 <span>Progresso: 75%</span>
                                 <span>Entrega: <?= $servico['data_termino']?></span>
+
+                                <?php foreach ($comentariosDoServico as $comentario):?>
+                                <strong>Comentário feito por:
+                                    <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
+
+                                <?php if ($comentario['servico_id']===$servico['id']): ?>
+                                <?php endif;?>
+                                <?php endforeach;?>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 75%"></div>

@@ -83,10 +83,11 @@ if ($nivel == 1) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
             </div>
             <div class="modal-body">
-                <form id="formAdicionarComentario" method="post" action="../database/adicionarComentario.php">
+                <form id="formAdicionarComentario" method="post">
                     <div class="mb-3">
                         <label for="Comentario" class="form-label">Adicione o Título do Projeto:</label>
-                        <text class="form-control" name="titulo" id="titulo" rows="4" required></text>
+                        <input type="text" class="form-control" name="tituloComentario" id="tituloComentario" rows="4"
+                            required />
                     </div>
                     <div class="mb-3">
                         <label for="Comentario" class="form-label">Adicione um Comentário ao Projeto:</label>
@@ -390,7 +391,7 @@ if ($nivel == 1) {
                                 <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
                                     <i class="fas fa-times me-1"></i> Cancelar
                                 </button>
-                                <button class="btn btn-sm btn-outline-primary" onclick="adicionarComentario(${servico.id})">
+                                <button class="btn btn-sm btn-outline-primary" onclick="prepararModalComentario(${servico.id})">
                                     <i class="fas fa-times me-1"></i> Adicionar Comentário
                                 </button>
                             </td>
@@ -467,10 +468,52 @@ if ($nivel == 1) {
             .catch(err => alert('Erro na requisição: ' + err));
     }
 
-    function adicionarComentario() {
+    function prepararModalComentario(servicoId) {
+        const usuarioId = document.getElementById('usuarioSelecionadoId').value;
+
+        document.getElementById('servicoIdComentario').value = servicoId;
+        document.getElementById('usuarioIdComentario').value = usuarioId;
+
         const modal = new bootstrap.Modal(document.getElementById('modalAdicionarComentario'));
         modal.show();
     }
+
+    document.getElementById('formAdicionarComentario').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const data = new URLSearchParams(formData).toString();
+
+        fetch('../database/adicionarComentario.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: data,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na resposta da rede: ' + response.statusText);
+                }
+                return response.json()
+            })
+            .then(result => {
+                if (result.sucesso) {
+                    alert('Comentário adicionado com sucesso!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById(
+                        'modalAdicionarComentario'));
+                    if (modal) {
+                        modal.hide();
+                    }
+                } else {
+                    alert('Erro ao adicionar comentário.' + result.erro);
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                alert('Ocorreu um erro. Tente novamente.')
+            });
+    });
     </script>
 </body>
 
