@@ -189,7 +189,8 @@ function formatarTempoPassado($data_criacao) {
 
                             <?php if ($comentario['servico_id']===$servico['id']): ?>
                             <div class="comentario">
-
+                                <strong>Comentário feito por:
+                                    <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
                                 <p><?= nl2br(htmlspecialchars($comentario['titulo_comentario'])) ?></p>
                                 <p><?= nl2br(htmlspecialchars($comentario['comentario'])) ?></p>
                                 <small>Criado em: <?= htmlspecialchars($comentario['data_criacao']) ?></small>
@@ -203,13 +204,6 @@ function formatarTempoPassado($data_criacao) {
                                 <span>Progresso: 75%</span>
                                 <span>Entrega: <?= $servico['data_termino']?></span>
 
-                                <?php foreach ($comentariosDoServico as $comentario):?>
-                                <strong>Comentário feito por:
-                                    <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
-
-                                <?php if ($comentario['servico_id']===$servico['id']): ?>
-                                <?php endif;?>
-                                <?php endforeach;?>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 75%"></div>

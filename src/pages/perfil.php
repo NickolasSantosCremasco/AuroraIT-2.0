@@ -72,6 +72,41 @@ if ($nivel == 1) {
     </div>
 </div>
 
+<!-- Modal para Agendar Consulta -->
+<div class="modal fade" id="modalEditarServico" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content rounded-4">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarLabel"><i class="fas fa-plus me-2"></i>Agendar Servico</h5>
+
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditarAgendamento" method="post" action="../database/editarServico.php">
+                    <div class="mb-3">
+                        <label for="tipoServico" class="form-label">Edite este Servico:</label>
+                        <select class="form-select" name="tipoServicoId" id="tipoServico" required>
+                            <option value="">Selecione uma opção</option>
+                            <option value="1">Plano Básico</option>
+                            <option value="2">Plano Intermediário</option>
+                            <option value="3">Plano Avançado</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dataTermino" class="form-label">Data Término</label>
+                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino" required>
+                    </div>
+
+                    <input type="hidden" name="usuario_id" id="usuarioSelecionadoId">
+                    <button type="submit" class="btn btn-vinho w-100">
+                        <i class="fas fa-check me-1"></i> Confirmar Edição
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Modal para Adicionar Comentários -->
 <div class="modal fade" id="modalAdicionarComentario" tabindex="-1" aria-labelledby="modalAdicionarComentarioLabel"
     aria-hidden="true">
@@ -385,10 +420,10 @@ if ($nivel == 1) {
                             </select>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarConsulta(${servico.id})">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarServico(<?= json_encode($servico) ?>)">
                                     <i class="fas fa-edit me-1"></i> Remarcar
                                 </button>
-                                <button class="btn btn-sm btn-outline-danger" onclick="cancelarConsulta(${servico.id})">
+                                <button class="btn btn-sm btn-outline-danger" onclick="cancelarServico(${servico.id})">
                                     <i class="fas fa-times me-1"></i> Cancelar
                                 </button>
                                 <button class="btn btn-sm btn-outline-primary" onclick="prepararModalComentario(${servico.id})">
@@ -466,6 +501,29 @@ if ($nivel == 1) {
                 }
             })
             .catch(err => alert('Erro na requisição: ' + err));
+    }
+
+    function remarcarServico(servico) {
+        const form = document.getElementById('formEditarAgendamento');
+        let servicoIdInput = document.getElementById('id_servico_editar');
+        if (!servicoIdInput) {
+            servicoIdInput = document.createElement('input');
+            servicoIdInput.type = 'hidden';
+            servicoIdInput.name = 'id_servico';
+            servicoIdInput.id = 'id_servico_editar';
+            form.appendChild(servicoIdInput);
+        }
+        servicoIdInput.value = servico.id;
+        document.getElementById('tipoServico').value = servico.tipo_servico_id;
+        const dataTermino = new Date(servico.data_termino);
+        const dataFormatada = dataTermino.getFullYear() + '-' +
+            ('0' + (dataTermino.getMonth() + 1)).slice(-2) + '-' +
+            ('0' + dataTermino.getDate()).slice(-2) + 'T' +
+            ('0' + dataTermino.getHours()).slice(-2) + ':' +
+            ('0' + dataTermino.getMinutes()).slice(-2);
+        document.getElementById('dataTermino').value = dataFormatada;
+        const modal = new bootstrap.Modal(document.getElementById('modalEditarServico'));
+        modal.show();
     }
 
     function prepararModalComentario(servicoId) {
