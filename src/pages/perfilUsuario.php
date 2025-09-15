@@ -37,8 +37,12 @@ $stmtTotalGastoEmServicos->execute([
 ]);
 
 $stmtComentarios = $pdo->prepare('SELECT c.*, u.nome AS nome_autor FROM comentarios c JOIN servico s ON c.servico_id = s.id JOIN usuarios u ON c.usuario_id = u.id WHERE s.usuario_id = :usuario_id ORDER BY c.data_criacao DESC');
-
 $stmtComentarios->execute([
+    ':usuario_id' => $usuario_id
+]);
+
+$stmtAtividadesRecentesTituloDosComentarios = $pdo->prepare('SELECT c.titulo_comentario, data_criacao FROM comentarios c JOIN servico s ON c.servico_id = s.id WHERE s.usuario_id = :usuario_id AND c.data_criacao >= DATE_SUB(NOW(), INTERVAL 7 DAY) ORDER BY c.data_criacao DESC LIMIT 10');
+$stmtAtividadesRecentesTituloDosComentarios->execute([
     ':usuario_id' => $usuario_id
 ]);
 
@@ -48,11 +52,11 @@ $TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
 $TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
 $TotalGasto = $stmtTotalGastoEmServicos->fetchColumn();
 $comentariosDoServico = $stmtComentarios->fetchAll(PDO::FETCH_ASSOC);
+$titulosRecentes = $stmtAtividadesRecentesTituloDosComentarios->fetchAll(PDO::FETCH_ASSOC);
 
 $TotalGastoFormatado = number_format($TotalGasto, 2 , ',', '.');
 
 $dataCriacao = new DateTime($_SESSION['usuario']['data_criacao']);
-
 $meses = array(
     'January' => 'janeiro',
     'February' => 'fevereiro',
@@ -71,6 +75,25 @@ $meses = array(
 $mes = $dataCriacao->format('F');
 $mes_pt = $meses[$mes];
 
+function formatarTempoPassado($data_criacao) {
+    $agora = new DateTime();
+    $data_atividade = new DateTime($data_criacao);
+    $intervalo = $agora->diff($data_atividade);
+
+    if ($intervalo->y > 0) {
+        return 'Há ' . $intervalo->y . ' ano(s)';
+    } elseif ($intervalo->m > 0) {
+        return 'Há ' . $intervalo->m . ' mês(es)';
+    } elseif ($intervalo->d > 0) {
+        return 'Há ' . $intervalo->d . ' dia(s)';
+    } elseif ($intervalo->h > 0) {
+        return 'Há ' . $intervalo->h . ' hora(s)';
+    } elseif ($intervalo->i > 0) {
+        return 'Há ' . $intervalo->i . ' minuto(s)';
+    } else {
+        return 'Agora mesmo';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -93,6 +116,7 @@ $mes_pt = $meses[$mes];
 
     <div class="container">
         <div class="header">
+            <a href="../../index.php">Voltar</a>
             <div class="profile-section">
                 <div class="profile-avatar"> <?= htmlspecialchars(substr($_SESSION['usuario']['nome'], 0, 2)) ?></div>
                 <div class="profile-info">
@@ -205,7 +229,7 @@ $mes_pt = $meses[$mes];
                 <div class="sidebar-card">
                     <h3 class="section-title">Ações Rápidas</h3>
                     <div class="quick-actions">
-                        <a href="#" class="action-btn">
+                        <a href="../../src/pages/faleconosco.php" class="action-btn">
                             <span>➕</span> Novo Projeto
                         </a>
 
@@ -219,41 +243,17 @@ $mes_pt = $meses[$mes];
                 <div class="sidebar-card">
                     <h3 class="section-title">Atividades Recentes</h3>
                     <div class="recent-activity">
+                        <?php foreach($titulosRecentes as $titulo):?>
                         <div class="activity-item">
                             <div class="activity-icon">✅</div>
                             <div class="activity-content">
-                                <div class="activity-title">Projeto aprovado</div>
-                                <div class="activity-time">Há 2 horas</div>
+                                <div class="activity-title"><?= htmlspecialchars($titulo['titulo_comentario']) ?></div>
+                                <div class="activity-time"><?= formatarTempoPassado($titulo['data_criacao']) ?></div>
                             </div>
                         </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">💬</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Nova mensagem no chat</div>
-                                <div class="activity-time">Há 5 horas</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">📊</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Relatório de progresso enviado</div>
-                                <div class="activity-time">Ontem</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">🚀</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Site publicado com sucesso</div>
-                                <div class="activity-time">2 dias atrás</div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon">⭐</div>
-                            <div class="activity-content">
-                                <div class="activity-title">Avaliação de 5 estrelas recebida</div>
-                                <div class="activity-time">3 dias atrás</div>
-                            </div>
-                        </div>
+                        <?php endforeach?>
+
+
                     </div>
                 </div>
             </div>
