@@ -17,26 +17,26 @@ if (!$servicoId) {
 }
 
 // Verifica se pertence ao usuário logado
-$stmt = $pdo->prepare("SELECT usuario_id FROM consultas WHERE id = ?");
+$stmt = $pdo->prepare("SELECT usuario_id FROM servico WHERE id = ?");
 $stmt->execute([$servicoId]);
-$consulta = $stmt->fetch(PDO::FETCH_ASSOC);
+$servico = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $usuarioLogadoId = $_SESSION['usuario']['id'];
 $nivel = $_SESSION['usuario']['nivel'];
 
-if (!$consulta || ($consulta['usuario_id'] != $usuarioLogadoId && $nivel != 2)) {
+if (!$servico || ($servico['usuario_id'] != $usuarioLogadoId && $nivel != 1)) {
     http_response_code(403);
     echo json_encode(['erro' => 'Permissão negada']);
     exit;
 }
 
 try {
-    $stmt = $pdo->prepare("DELETE FROM consultas WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM servico WHERE id = ?");
     $stmt->execute([$servicoId]);
     echo json_encode(['sucesso' => true]);
     
 } catch(PDOException $e) {
     http_response_code(500);
-    echo json_encode(['erro' => 'Erro ao cancelar consulta: ' . $e->getMessage()]);
+    echo json_encode(['erro' => 'Erro ao cancelar o servico: ' . $e->getMessage()]);
 }
 ?>
