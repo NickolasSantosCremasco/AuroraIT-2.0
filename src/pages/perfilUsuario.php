@@ -106,6 +106,11 @@ function formatarTempoPassado($data_criacao) {
     <link rel="stylesheet" href="../css/perfilUsuario.css">
     <link rel="shortcut icon" href="../img/favicon/favicon.png" type="image/x-icon">
 </head>
+<style>
+.comentario-oculto {
+    display: none;
+}
+</style>
 
 <body>
     <div class="floating-elements">
@@ -185,19 +190,46 @@ function formatarTempoPassado($data_criacao) {
 
                         </div>
                         <div class="service-details">
-                            <?php foreach ($comentariosDoServico as $comentario):?>
+                            <?php
+                                $comentariosDoServicoEncontrados = false;
+                                $comentariosParaEsteServico = array_filter($comentariosDoServico, function($c) use ($servico) {
+                                    return $c['servico_id'] === $servico['id'];
+                                });
 
-                            <?php if ($comentario['servico_id']===$servico['id']): ?>
+                                if (!empty($comentariosParaEsteServico)):
+                                    $comentariosDoServicoEncontrados = true;
+                                        
+                                    $primeiroComentario = array_shift($comentariosParaEsteServico);
+                                ?>
                             <div class="comentario">
                                 <strong>Comentário feito por:
-                                    <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
-                                <p><?= nl2br(htmlspecialchars($comentario['titulo_comentario'])) ?></p>
-                                <p><?= nl2br(htmlspecialchars($comentario['comentario'])) ?></p>
-                                <small>Criado em: <?= htmlspecialchars($comentario['data_criacao']) ?></small>
+                                    <?= htmlspecialchars($primeiroComentario['nome_autor']) ?></strong>
+                                <p><?= nl2br(htmlspecialchars($primeiroComentario['titulo_comentario'])) ?></p>
+                                <p><?= nl2br(htmlspecialchars($primeiroComentario['comentario'])) ?></p>
+                                <small>Criado em:
+                                    <?= formatarTempoPassado($primeiroComentario['data_criacao']) ?></small>
                             </div>
                             <hr>
-                            <?php endif;?>
-                            <?php endforeach;?>
+
+                            <?php if (!empty($comentariosParaEsteServico)): ?>
+                            <div id="comentarios-adicionais-<?= $servico['id'] ?>" class="comentarios-adicionais">
+                                <?php foreach ($comentariosParaEsteServico as $comentario): ?>
+                                <div class="comentario comentario-oculto">
+                                    <strong>Comentário feito por:
+                                        <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
+                                    <p><?= nl2br(htmlspecialchars($comentario['titulo_comentario'])) ?></p>
+                                    <p><?= nl2br(htmlspecialchars($comentario['comentario'])) ?></p>
+                                    <small>Criado em: <?= formatarTempoPassado($comentario['data_criacao']) ?></small>
+                                </div>
+                                <hr>
+                                <?php endforeach; ?>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary btn-ver-mais"
+                                data-servico-id="<?= $servico['id'] ?>">Ver todos os comentários</button>
+                            <?php endif; ?>
+                            <?php else: ?>
+                            <p>Nenhum comentário para este serviço.</p>
+                            <?php endif; ?>
                         </div>
                         <div class="service-progress">
                             <div class="progress-label">
@@ -255,6 +287,9 @@ function formatarTempoPassado($data_criacao) {
     </div>
 
     <script src="../js/perfilUsuario.js">
+    </script>
+    <script>
+
     </script>
 </body>
 

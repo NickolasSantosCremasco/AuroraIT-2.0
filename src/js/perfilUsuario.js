@@ -93,3 +93,24 @@
             }
         `;
     document.head.appendChild(style);
+
+     document.addEventListener('DOMContentLoaded', function() {
+       
+        document.querySelectorAll('.btn-ver-mais').forEach(button => {
+            button.addEventListener('click', function() {
+                const servicoId = this.getAttribute('data-servico-id');
+                const comentariosAdicionais = document.getElementById(
+                    `comentarios-adicionais-${servicoId}`);
+
+                // Remove a classe que esconde os comentários
+                comentariosAdicionais.querySelectorAll('.comentario-oculto').forEach(
+                    comentario => {
+                        comentario.classList.remove('comentario-oculto');
+                    });
+
+                // Esconde o botão
+                this.style.display = 'none';
+            });
+        });
+
+    });
