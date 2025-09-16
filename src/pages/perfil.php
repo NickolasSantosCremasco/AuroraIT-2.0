@@ -242,7 +242,12 @@ if ($nivel == 1) {
                                     setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'portuguese');
                                     date_default_timezone_set('America/Sao_Paulo');
                                     $data = new DateTime($usuario['data_criacao']);
-                                    echo strftime('%d de %B de %Y', $data->getTimestamp());
+                                    $formatter = new IntlDateFormatter(
+                                        'pt_BR',
+                                        IntlDateFormatter::LONG,
+                                        IntlDateFormatter::NONE
+                                    );
+                                    echo $formatter->format($data);
                                     ?>
                                 </td>
                                 <td><span class="badge bg-success"> <?= htmlspecialchars($usuario['nivel'])?></span>
@@ -276,10 +281,7 @@ if ($nivel == 1) {
 
     // Variável para armazenar todos os usuários inicialmente carregados
     let todosUsuarios = [];
-
-    // Carrega todos os usuários quando a página é carregada
     document.addEventListener('DOMContentLoaded', function() {
-        // Se já temos usuários no PHP, convertemos para o formato que o JS espera
         <?php if($nivel == 1 && isset($usuarios)): ?>
         todosUsuarios = <?= json_encode($usuarios) ?>;
         renderUsuarios(todosUsuarios);
@@ -293,6 +295,7 @@ if ($nivel == 1) {
             btn.addEventListener('click', selecionarUsuario);
         });
     }
+
 
     function renderUsuarios(usuarios) {
         let html = '';
@@ -334,12 +337,10 @@ if ($nivel == 1) {
         adicionarListenersBotoesUsuario();
     }
 
-    // Função para filtrar usuários localmente (sem requisição ao servidor)
     function filtrarUsuarios(termo) {
         termo = termo.toLowerCase().trim();
 
         if (termo === '') {
-            // Se o campo de pesquisa estiver vazio, mostra todos os usuários
             renderUsuarios(todosUsuarios);
             return;
         }
@@ -370,6 +371,7 @@ if ($nivel == 1) {
     });
 
     function selecionarUsuario() {
+
         btnAgendarServico.classList.remove('d-none');
         tabelaUsuarios.classList.add('d-none');
         cabecalhoTabelaUsuarios.classList.add('d-none')
@@ -420,7 +422,7 @@ if ($nivel == 1) {
                             </select>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarServico(<?= json_encode($servico) ?>)">
+                                <button class="btn btn-sm btn-outline-secondary" onclick="remarcarServico(${servico.id})">
                                     <i class="fas fa-edit me-1"></i> Remarcar
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger" onclick="cancelarServico(${servico.id})">
