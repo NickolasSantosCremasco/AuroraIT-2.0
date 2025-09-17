@@ -414,12 +414,18 @@ if ($nivel == 1) {
                             <td>${servico.data_inicio}</td>
                             <td>${servico.data_termino}</td>
                             <td>R$ ${parseFloat(servico.valor).toFixed(2).replace('.', ',')}</td>
-                            <td>
+                            <td style="display:flex; gap:10px;">
                             <select class="form-select" onchange="atualizarStatus(${servico.id}, this.value)">
                                 <option value="Em Andamento" ${servico.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
                                 <option value="Concluído" ${servico.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
                                 <option value="Cancelado" ${servico.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
                             </select>
+                             <button class="btn btn-sm btn-outline-primary" onclick="salvarStatus(this)" data-servico-id="${servico.id}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy me-1" viewBox="0 0 16 16">
+                                    <path d="M11 2H9v3h2z"/>
+                                    <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                                </svg>
+                            </button>
                             </td>
                             <td>
                                 <button class="btn btn-sm btn-outline-secondary" onclick="remarcarServico(${servico.id})">
@@ -526,6 +532,34 @@ if ($nivel == 1) {
         document.getElementById('dataTermino').value = dataFormatada;
         const modal = new bootstrap.Modal(document.getElementById('modalEditarServico'));
         modal.show();
+    }
+
+    function salvarStatus(id) {
+        const selectStatus = document.querySelector(`select[data-servico-id='${servicoId}']`);
+        const novoStatus = selectStatus.value;
+        if (!confirm(`Deseja realmente atualizar o status do serviço ${servicoId} para "${novoStatus}"?`)) {
+            return;
+        }
+        fetch('../database/salvarStatus.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${servicoId}&status=${novoStatus}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.sucesso) {
+                    alert('Status atualizado com sucesso.');
+                    location.reload();
+                } else {
+                    alert('Erro: ' + (data.erro || 'Desconhecido'));
+                }
+            })
+            .catch(err => {
+                console.error('Erro na requisição:', err);
+                alert('Erro na requisição: ' + err);
+            });
     }
 
     function prepararModalComentario(servicoId) {
