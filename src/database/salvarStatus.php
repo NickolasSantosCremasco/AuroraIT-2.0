@@ -1,22 +1,30 @@
 <?php
-// ...
 require_once 'config.php';
 require_once 'auth.php';
 
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=utf-8');
 
 if (!estaLogado() || $_SESSION['usuario']['nivel'] !== 1) {
     echo json_encode(['sucesso' => false, 'erro' => 'Acesso negado.']);
     exit;
 }
 
-$id_servico_raw = filter_input(INPUT_POST, 'id');
-$novo_status_raw = filter_input(INPUT_POST, 'status');
-$id_servico = filter_var($id_servico_raw, FILTER_VALIDATE_INT);
-$novo_status = trim(htmlspecialchars($novo_status_raw, ENT_QUOTES, 'UTF-8'));
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['sucesso' => false, 'erro' => 'Método não permitido.']);
+    exit;
+}
 
-if ($id_servico === false || empty($novo_status)) {
-    echo json_encode(['sucesso' => false, 'erro' => 'Dados inválidos.']);
+$id_servico = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+$novo_status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+
+if ($id_servico === false || $id_servico === null || $id_servico <= 0) {
+    echo json_encode(['sucesso' => false, 'erro' => 'ID do serviço inválido.']);
+    exit;
+}
+
+$status_permitidos = ['Em Andamento', 'Concluído', 'Cancelado'];
+if (!in_array($novo_status, $status_permitidos)) {
+    echo json_encode(['sucesso' => false, 'erro' => 'Status inválido.']);
     exit;
 }
 
@@ -27,9 +35,14 @@ try {
         ':id' => $id_servico
     ]);
 
-    echo json_encode(['sucesso' => true]);
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['sucesso' => true]);
+    } else {
+        echo json_encode(['sucesso' => false, 'erro' => 'Nenhum serviço foi atualizado. Verifique se o ID existe.']);
+    }
 
 } catch (PDOException $e) {
-    echo json_encode(['sucesso' => false, 'erro' => 'Erro no banco de dados: ' . $e->getMessage()]);
+    error_log('Erro ao atualizar status: ' . $e->getMessage());
+    echo json_encode(['sucesso' => false, 'erro' => 'Erro no banco de dados.']);
 }
 ?>

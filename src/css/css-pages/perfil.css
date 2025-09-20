@@ -4,3 +4,44 @@ body {
     background-position: center;
     background-size: cover;
 }
+
+.stats-grid {
+        display: flex;
+        flex-wrap: wrap;
+        /* Permite que os cartões se ajustem em telas menores */
+        gap: 1.5rem;
+        /* Espaço entre os cartões */
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        /* Um cinza claro para destacar a seção */
+        border-radius: 1rem;
+    }
+
+    .stat-card {
+        flex: 1 1 200px;
+        /* Faz os cartões se ajustarem e ocuparem o espaço disponível */
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        /* Fundo com gradiente */
+        color: white;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        opacity: 0.8;
+    }

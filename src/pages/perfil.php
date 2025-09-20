@@ -14,7 +14,28 @@ if ($nivel == 1) {
     $stmtUsuarios = $pdo->prepare('SELECT id, nome, email, numero, nivel, rg, cpf, genero, data_criacao FROM usuarios ORDER BY nome ASC');
     $stmtUsuarios->execute();
     $usuarios = $stmtUsuarios->fetchAll(PDO::FETCH_ASSOC);
-} 
+
+
+    // Consulta para pegar a quantidade total de usuários
+    $stmtTotalUsuarios = $pdo->prepare('SELECT COUNT(*) FROM usuarios');
+    $stmtTotalUsuarios->execute();
+    $totalUsuarios = $stmtTotalUsuarios->fetchColumn();
+
+    // Consulta para pegar a quantidade total de serviços concluídos
+    $stmtServicosConcluidos = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE status = "Concluído"');
+    $stmtServicosConcluidos->execute();
+    $totalServicosConcluidos = $stmtServicosConcluidos->fetchColumn();
+
+    // Consulta para pegar a quantidade total de serviços em andamento
+    $stmtServicosPendentes = $pdo->prepare('SELECT COUNT(*) FROM servico WHERE status = "Em Andamento"');
+    $stmtServicosPendentes->execute();
+    $totalServicosPendentes = $stmtServicosPendentes->fetchColumn();
+
+    // Consulta para pegar o valor total dos serviços concluídos
+    $stmtDinheiroConcluidos = $pdo->prepare('SELECT SUM(ts.valor) AS total_dinheiro FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.status = "Concluído"');
+    $stmtDinheiroConcluidos->execute();
+    $totalDinheiroConcluidos = $stmtDinheiroConcluidos->fetchColumn();
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -191,15 +212,27 @@ if ($nivel == 1) {
                 </div>
 
                 <?php if($nivel == 1):?>
-                <div>
-                    <div>
-                        <!--Quantidade de Usuarios-->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number"><?= $totalUsuarios ?? 0 ?></span>
+                        <span class="stat-label">Usuários Totais</span>
                     </div>
-                    <div>
-                        <!--Quantidade de Admins-->
+
+                    <div class="stat-card">
+                        <span class="stat-number"><?= $totalServicosConcluidos ?? 0 ?></span>
+                        <span class="stat-label">Concluídos</span>
                     </div>
-                    <div>
-                        <!--Serviços Pendente-->
+
+                    <div class="stat-card">
+                        <span class="stat-number"><?= $totalServicosPendentes ?? 0 ?></span>
+                        <span class="stat-label">Em Andamento</span>
+                    </div>
+
+                    <div class="stat-card">
+                        <span class="stat-number">
+                            R$ <?= number_format($totalDinheiroConcluidos ?? 0, 2, ',', '.') ?>
+                        </span>
+                        <span class="stat-label">Total Recebido</span>
                     </div>
                 </div>
                 <div class="table-responsive">
