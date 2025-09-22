@@ -32,7 +32,8 @@ if ($nivel == 1) {
     $totalServicosPendentes = $stmtServicosPendentes->fetchColumn();
 
     // Consulta para pegar o valor total dos serviços concluídos
-    $stmtDinheiroConcluidos = $pdo->prepare('SELECT SUM(ts.valor) AS total_dinheiro FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.status = "Concluído"');
+    $stmtDinheiroConcluidos = $pdo->prepare('
+    SELECT SUM(ts.valor) AS total_dinheiro FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.status = "Concluído"');
     $stmtDinheiroConcluidos->execute();
     $totalDinheiroConcluidos = $stmtDinheiroConcluidos->fetchColumn();
 }
@@ -448,7 +449,7 @@ if ($nivel == 1) {
                             <td>${servico.data_termino}</td>
                             <td>R$ ${parseFloat(servico.valor).toFixed(2).replace('.', ',')}</td>
                             <td style="display:flex; gap:10px;">
-                            <select class="form-select" onchange="atualizarStatus(${servico.id}, this.value)">
+                            <select class="form-select">
                                 <option value="Em Andamento" ${servico.status === 'Em Andamento' ? 'selected' : ''}>Em Andamento</option>
                                 <option value="Concluído" ${servico.status === 'Concluído' ? 'selected' : ''}>Concluído</option>
                                 <option value="Cancelado" ${servico.status === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
@@ -567,12 +568,21 @@ if ($nivel == 1) {
         modal.show();
     }
 
-    function salvarStatus(id) {
-        const selectStatus = document.querySelector(`select[data-servico-id='${servicoId}']`);
+    function salvarStatus(buttonElement) {
+
+        const servicoId = buttonElement.getAttribute('data-servico-id');
+        const selectStatus = buttonElement.closest('td').querySelector('select');
+
+        if (!selectStatus) {
+            console.error('Erro: Elemento <select> não encontrado na mesma célula do botão.');
+            alert('Erro interno: Não foi possível encontrar o seletor de status. Tente recarregar a página.');
+            return;
+        }
         const novoStatus = selectStatus.value;
         if (!confirm(`Deseja realmente atualizar o status do serviço ${servicoId} para "${novoStatus}"?`)) {
             return;
         }
+
         fetch('../database/salvarStatus.php', {
                 method: 'POST',
                 headers: {

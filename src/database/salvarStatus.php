@@ -15,9 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 $id_servico = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
-$novo_status = filter_input(INPUT_POST, 'status', FILTER_SANITIZE_SPECIAL_CHARS);
+$novo_status = $_POST['status'] ?? null;
 
-if ($id_servico === false || $id_servico === null || $id_servico <= 0) {
+// Simplificando a validação do ID
+if ($id_servico === false) {
     echo json_encode(['sucesso' => false, 'erro' => 'ID do serviço inválido.']);
     exit;
 }
@@ -38,7 +39,8 @@ try {
     if ($stmt->rowCount() > 0) {
         echo json_encode(['sucesso' => true]);
     } else {
-        echo json_encode(['sucesso' => false, 'erro' => 'Nenhum serviço foi atualizado. Verifique se o ID existe.']);
+        // Se a consulta foi executada mas nenhuma linha foi afetada
+        echo json_encode(['sucesso' => false, 'erro' => 'Nenhum serviço foi atualizado.']);
     }
 
 } catch (PDOException $e) {
