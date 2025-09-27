@@ -46,6 +46,9 @@ if ($nivel == 1) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="../img/favicon/favicon.png" type="image/x-icon">
 
+    <!-- BOXICON  -->
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+
     <!--Bootstrap-->
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -71,8 +74,8 @@ if ($nivel == 1) {
             <div class="modal-body">
                 <form id="formAgendamento" method="post" action="../database/criarServico.php">
                     <div class="mb-3">
-                        <label for="tipoServico" class="form-label">Tipo de Servico</label>
-                        <select class="form-select" name="tipoServicoId" id="tipoServico" required>
+                        <label for="tipoServico-agendar" class="form-label">Tipo de Servico</label>
+                        <select class="form-select" name="tipoServicoId" id="tipoServico-agendar" required>
                             <option value="">Selecione uma opção</option>
                             <option value="1">Plano Básico</option>
                             <option value="2">Plano Intermediário</option>
@@ -80,11 +83,12 @@ if ($nivel == 1) {
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="dataTermino" class="form-label">Data Término</label>
-                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino" required>
+                        <label for="dataTermino-agendar" class="form-label">Data Término</label>
+                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino-agendar"
+                            required>
                     </div>
 
-                    <input type="hidden" name="usuario_id" id="usuarioSelecionadoId">
+                    <input type="hidden" name="usuario_id" id="usuarioSelecionadoId-agendar">
                     <button type="submit" class="btn btn-vinho w-100">
                         <i class="fas fa-check me-1"></i> Confirmar Agendamento
                     </button>
@@ -106,8 +110,8 @@ if ($nivel == 1) {
             <div class="modal-body">
                 <form id="formEditarAgendamento" method="post" action="../database/editarServico.php">
                     <div class="mb-3">
-                        <label for="tipoServico" class="form-label">Edite este Servico:</label>
-                        <select class="form-select" name="tipoServicoId" id="tipoServico" required>
+                        <label for="tipoServico-editar" class="form-label">Edite este Servico:</label>
+                        <select class="form-select" name="tipoServicoId" id="tipoServico-editar" required>
                             <option value="">Selecione uma opção</option>
                             <option value="1">Plano Básico</option>
                             <option value="2">Plano Intermediário</option>
@@ -115,11 +119,12 @@ if ($nivel == 1) {
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="dataTermino" class="form-label">Data Término</label>
-                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino" required>
+                        <label for="dataTermino-editar" class="form-label">Data Término</label>
+                        <input type="datetime-local" class="form-control" name="dataTermino" id="dataTermino-editar"
+                            required>
                     </div>
 
-                    <input type="hidden" name="usuario_id" id="usuarioSelecionadoId">
+                    <input type="hidden" name="usuario_id" id="usuarioSelecionadoId-editar">
                     <button type="submit" class="btn btn-vinho w-100">
                         <i class="fas fa-check me-1"></i> Confirmar Edição
                     </button>
@@ -177,26 +182,24 @@ if ($nivel == 1) {
                 <!-- Navegação -->
                 <nav class="nav flex-column">
                     <a class="nav-link text-white active bg-white bg-opacity-25 rounded mb-2" href="../../index.php">
-                        <i class="fas fa-home me-2"></i> Inicial
+                        <i class="bxr bx-home me-2"></i> Voltar
                     </a>
-                    <a class="nav-link text-white rounded mb-2" href="#">
-                        <i class="fas fa-users me-2"></i> Usuários
+                    <a class="nav-link text-white rounded mb-2" id="linkConfiguracao" href="#">
+                        <i class="bxr bx-cog me-2"></i> Configurações
                     </a>
-                    <a class="nav-link text-white rounded mb-2" href="#">
-                        <i class="fas fa-calendar-alt me-2"></i> Serviços
-                    </a>
-                    <a class="nav-link text-white rounded mb-2" href="#">
-                        <i class="fas fa-cog me-2"></i> Configurações
+
+                    <a class="nav-link text-white rounded mb-2 d-none" id="linkDashboard" href="#">
+                        <i class="bxr  bx-dashboard-alt me-2"></i> Dashboard
                     </a>
                     <a class="nav-link text-white bg-danger bg-opacity-25 rounded mt-auto"
                         href="../database/logout.php">
-                        <i class="fas fa-sign-out-alt me-2"></i> Sair da Conta
+                        <i class="bxr bx-arrow-out-up-square-half me-2"></i> Sair da Conta
                     </a>
                 </nav>
             </aside>
 
             <!-- Main Content -->
-            <main class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10">
+            <main class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10" id="dashboard">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h1 class="fs-3 fw-semibold">Dashboard</h1>
                     <div class="d-flex">
@@ -299,6 +302,49 @@ if ($nivel == 1) {
                 </div>
                 <?php endif;?>
             </main>
+
+            <div class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10 d-none" id="configuracoes">
+                <h1 class="fs-3 fw-semibold mb-4">Configurações</h1>
+
+                <div class="config-card">
+                    <h2 class="config-card-title">Dados Pessoais</h2>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="configNome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="configNome" value="Nickolas">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="configEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="configEmail"
+                                    value="nickolascremasco@gmail.com">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-salvar mt-2">Salvar Alterações</button>
+                    </form>
+                </div>
+
+                <div class="config-card">
+                    <h2 class="config-card-title">Alterar Senha</h2>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="configSenhaAtual" class="form-label">Senha Atual</label>
+                                <input type="password" class="form-control" id="configSenhaAtual">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="configNovaSenha" class="form-label">Nova Senha</label>
+                                <input type="password" class="form-control" id="configNovaSenha">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="configConfirmarSenha" class="form-label">Confirmar Nova Senha</label>
+                                <input type="password" class="form-control" id="configConfirmarSenha">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-salvar mt-2">Alterar Senha</button>
+                    </form>
+                </div>
+            </div>
         </div>
 
     </section>
@@ -312,6 +358,11 @@ if ($nivel == 1) {
     const btnAgendarServico = document.getElementById('btnAgendarServico');
     const servicosUsuarioContainer = document.getElementById('servicosUsuario');
     const cabecalhoTabelaUsuarios = document.querySelector('.table-light')
+    const linkConfiguracao = document.querySelector('#linkConfiguracao');
+    const configuracao = document.querySelector('#configuracoes');
+    const linkDashboard = document.querySelector('#linkDashboard');
+    const Dashboard = document.querySelector('#dashboard');
+
 
     // Variável para armazenar todos os usuários inicialmente carregados
     let todosUsuarios = [];
@@ -322,7 +373,24 @@ if ($nivel == 1) {
         <?php endif; ?>
 
         adicionarListenersBotoesUsuario();
+
+        linkConfiguracao.addEventListener('click', mostrarConfiguracao);
+        linkDashboard.addEventListener('click', mostrarDashboard);
     });
+
+    function mostrarConfiguracao() {
+        dashboard.style.display = 'none';
+        linkConfiguracao.style.display = 'none';
+
+        linkDashboard.classList.remove('d-none');
+        configuracao.classList.remove('d-none')
+    }
+
+    function mostrarDashboard() {
+        dashboard.style.display = 'block';
+        linkConfiguracao.style.display = 'block';
+        linkDashboard.classList.add('d-none');
+    }
 
     function adicionarListenersBotoesUsuario() {
         document.querySelectorAll('.btn-usuario').forEach(btn => {
@@ -411,7 +479,7 @@ if ($nivel == 1) {
         cabecalhoTabelaUsuarios.classList.add('d-none')
 
         const userId = this.getAttribute('data-id');
-        document.getElementById('usuarioSelecionadoId').value = userId;
+        document.getElementById('usuarioSelecionadoId-agendar').value = userId;
 
         fetch(`../database/getServicos.php?id=${userId}`)
             .then(response => {
@@ -556,14 +624,14 @@ if ($nivel == 1) {
             form.appendChild(servicoIdInput);
         }
         servicoIdInput.value = servico.id;
-        document.getElementById('tipoServico').value = servico.tipo_servico_id;
+        document.getElementById('tipoServico-editar').value = servico.tipo_servico_id;
         const dataTermino = new Date(servico.data_termino);
         const dataFormatada = dataTermino.getFullYear() + '-' +
             ('0' + (dataTermino.getMonth() + 1)).slice(-2) + '-' +
             ('0' + dataTermino.getDate()).slice(-2) + 'T' +
             ('0' + dataTermino.getHours()).slice(-2) + ':' +
             ('0' + dataTermino.getMinutes()).slice(-2);
-        document.getElementById('dataTermino').value = dataFormatada;
+        document.getElementById('dataTermino-editar').value = dataFormatada;
         const modal = new bootstrap.Modal(document.getElementById('modalEditarServico'));
         modal.show();
     }
