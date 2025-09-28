@@ -1,0 +1,92 @@
+:root {
+        --cor-destaque-roxo: #6a44f3;
+        --cor-sucesso: #198754;
+        --cor-erro: #dc3545;
+        --cor-fundo-card: #ffffff;
+        --cor-borda-suave: #e9ecef;
+        --cor-sombra: rgba(106, 68, 243, 0.1);
+        --cor-texto-titulo: #343a40;
+    }
+
+    /* Estilo do Card de Configuração */
+    .config-card {
+        background-color: var(--cor-fundo-card);
+        border: 1px solid var(--cor-borda-suave);
+        border-radius: 12px;
+        /* Bordas um pouco mais arredondadas */
+        padding: 2rem 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 20px var(--cor-sombra);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        /* Garante que os elementos internos respeitem a borda */
+    }
+
+    .config-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(106, 68, 243, 0.15);
+    }
+
+    /* Título dentro do card com ícone */
+    .config-card-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--cor-texto-titulo);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--cor-borda-suave);
+        display: flex;
+        align-items: center;
+    }
+
+    .config-card-title i {
+        margin-right: 12px;
+        color: var(--cor-destaque-roxo);
+        font-size: 1.5rem;
+    }
+
+    /* Inputs do Formulário */
+    .form-control {
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--cor-borda-suave);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--cor-destaque-roxo);
+        box-shadow: 0 0 0 4px rgba(106, 68, 243, 0.15);
+    }
+
+    /* Classes de validação customizadas */
+    .form-control.is-valid,
+    .form-control.is-valid:focus {
+        border-color: var(--cor-sucesso);
+        box-shadow: 0 0 0 4px rgba(25, 135, 84, 0.15);
+    }
+
+    .form-control.is-invalid,
+    .form-control.is-invalid:focus {
+        border-color: var(--cor-erro);
+        box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15);
+    }
+
+    /* Botão Salvar personalizado */
+    .btn-salvar {
+        background: linear-gradient(45deg, #8A2BE2, var(--cor-destaque-roxo));
+        color: white;
+        font-weight: 600;
+        padding: 0.85rem 1.75rem;
+        border: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-salvar:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(106, 68, 243, 0.3);
+        color: white;
+    }

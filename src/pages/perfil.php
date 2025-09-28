@@ -56,10 +56,17 @@ if ($nivel == 1) {
     <link rel="stylesheet" href="../css/css-globais/navbar.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/css-pages/perfil.css">
+    <link rel="stylesheet" href="../css/css-pages/configuracaoPerfil.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>Aurorability | Perfil</title>
 
+    <style>
 
+    </style>
 </head>
 
 <!-- Modal para Agendar Consulta -->
@@ -303,49 +310,66 @@ if ($nivel == 1) {
                 <?php endif;?>
             </main>
 
-            <div class="flex-grow-1 bg-white p-4 rounded-end col-12 col-md-9 col-lg-10 d-none" id="configuracoes">
-                <h1 class="fs-3 fw-semibold mb-4">Configurações</h1>
+            <div class="flex-grow-1 bg-light p-4 rounded-end col-12 col-md-9 col-lg-10 d-none" id="configuracoes">
+                <h1 class="fs-3 fw-semibold mb-4">Configurações da Conta</h1>
 
                 <div class="config-card">
-                    <h2 class="config-card-title">Dados Pessoais</h2>
-                    <form>
+                    <h2 class="config-card-title">
+                        <i class="fas fa-user-edit"></i>
+                        Dados Pessoais
+                    </h2>
+                    <form id="formDadosPessoais">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="configNome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="configNome" value="Nickolas">
+                                <input type="text" class="form-control" id="configNome" name="nome">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="configEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="configEmail"
-                                    value="nickolascremasco@gmail.com">
+                                <input type="email" class="form-control" name="email" id="configEmail">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="configNumero" class="form-label">Número</label>
+                                <input type="tel" class="form-control" name="numero" id="configNumero">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-salvar mt-2">Salvar Alterações</button>
+                        <button type="submit" class="btn btn-salvar mt-2">
+                            <i class="fas fa-save"></i>
+                            Salvar Alterações
+                        </button>
                     </form>
                 </div>
 
                 <div class="config-card">
-                    <h2 class="config-card-title">Alterar Senha</h2>
-                    <form>
+                    <h2 class="config-card-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Alterar Senha
+                    </h2>
+                    <form method="post" id="formAlterarSenha" action="../database/alterarSenha.php">
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label for="configSenhaAtual" class="form-label">Senha Atual</label>
-                                <input type="password" class="form-control" id="configSenhaAtual">
+                                <input type="password" class="form-control" name="senha_atual" id="configSenhaAtual"
+                                    required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="configNovaSenha" class="form-label">Nova Senha</label>
-                                <input type="password" class="form-control" id="configNovaSenha">
+                                <input type="password" class="form-control" name="nova_senha" id="configNovaSenha"
+                                    required>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <label for="configConfirmarSenha" class="form-label">Confirmar Nova Senha</label>
-                                <input type="password" class="form-control" id="configConfirmarSenha">
+                                <input type="password" class="form-control" name="confirmar_senha"
+                                    id="configConfirmarSenha" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-salvar mt-2">Alterar Senha</button>
+                        <button type="submit" class="btn btn-salvar mt-2">
+                            <i class="fas fa-key"></i>
+                            Alterar Senha
+                        </button>
                     </form>
                 </div>
             </div>
-        </div>
 
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
