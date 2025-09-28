@@ -318,7 +318,7 @@ if ($nivel == 1) {
                         <i class="fas fa-user-edit"></i>
                         Dados Pessoais
                     </h2>
-                    <form id="formDadosPessoais">
+                    <form method="post" action="../database/alterarDadosPessoais.php" id="formDadosPessoais">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="configNome" class="form-label">Nome</label>
