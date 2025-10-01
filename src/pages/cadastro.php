@@ -17,17 +17,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $erro = "As senhas não coincidem!";
     } elseif (strlen($senha) < 6) {
         $erro = "A senha deve ter pelo menos 6 caracteres";
-    } else {
-        // Se a validação for um sucesso...
-        // Armazena os dados da primeira etapa na sessão
-        $_SESSION['cadastro']['nome'] = $nome;
-        $_SESSION['cadastro']['email'] = $email;
-        $_SESSION['cadastro']['senha'] = password_hash($senha, PASSWORD_DEFAULT); // Armazena a senha já com hash
+        } else {
+        
+            $_SESSION['cadastro']['nome'] = $nome;
+            $_SESSION['cadastro']['email'] = $email;
+            $_SESSION['cadastro']['senha'] = password_hash($senha, PASSWORD_DEFAULT);
 
-        // Redireciona para a próxima etapa
-        header('Location: cadastro_etapa2.php');
-        exit();
-    }
+            header('Location: cadastro_etapa2.php');
+            exit();
+        }
 }
 
 ?>

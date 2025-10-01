@@ -42,30 +42,23 @@
                 }
             }
 
-            // Se não houver erro, proceede com o registro completo
             if (is_null($erro)) {
-                // Coleta TODOS os dados da sessão, incluindo os da primeira etapa
+                
                 $dados_usuario = $_SESSION['cadastro'];
                 
-                // Adiciona o caminho da foto, se houver
                 if ($caminho_foto) {
                     $dados_usuario['caminho_foto'] = $caminho_foto;
                 }
-
-                // Chama a função de registro com os dados completos
-                // A sua função `registrarUsuario` precisará ser modificada para aceitar um array de dados
-                $resultado_registro = registrarUsuario($dados_usuario);
                 
-                // Limpa a sessão após o registro (isso é importante!)
+                $resultado_registro = registrarUsuario($dados_usuario);
                 unset($_SESSION['cadastro']);
-
-                if ($resultado_registro['sucesso']) {
-                    // Redireciona para o login com uma mensagem de sucesso
+                
+                if ($resultado_registro['sucesso']) {   
                     $_SESSION['sucesso'] = $resultado_registro['message'];
                     header('Location: login.php');
                     exit();
+                    
                 } else {
-                    // Se o registro falhar, define a mensagem de erro e permanece na página
                     $erro = $resultado_registro['message'];
                 }
             }   

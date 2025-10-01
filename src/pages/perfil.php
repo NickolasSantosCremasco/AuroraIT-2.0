@@ -698,7 +698,7 @@ if ($nivel == 1) {
     }
 
     function prepararModalComentario(servicoId) {
-        const usuarioId = document.getElementById('usuarioSelecionadoId').value;
+        const usuarioId = document.getElementById('usuarioSelecionadoId-agendar').value;
 
         document.getElementById('servicoIdComentario').value = servicoId;
         document.getElementById('usuarioIdComentario').value = usuarioId;

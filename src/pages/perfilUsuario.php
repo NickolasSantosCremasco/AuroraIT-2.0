@@ -46,6 +46,11 @@ $stmtAtividadesRecentesTituloDosComentarios->execute([
     ':usuario_id' => $usuario_id
 ]);
 
+$stmtCaminhoFoto = $pdo->prepare('SELECT caminho_foto FROM usuarios WHERE id = :usuario_id');
+$stmtCaminhoFoto->execute([
+    ':usuario_id' => $usuario_id
+]);
+
 $meusServicos = $stmtMeusServicos->fetchAll(PDO::FETCH_ASSOC);
 $totalServicos = $stmtTotalServicos->fetchColumn();
 $TotalServicosEmAndamento = $stmtTotalServicosEmAndamento->fetchColumn();
@@ -53,6 +58,7 @@ $TotalServicosConcluidos = $stmtTotalServicosConcluidos->fetchColumn();
 $TotalGasto = $stmtTotalGastoEmServicos->fetchColumn();
 $comentariosDoServico = $stmtComentarios->fetchAll(PDO::FETCH_ASSOC);
 $titulosRecentes = $stmtAtividadesRecentesTituloDosComentarios->fetchAll(PDO::FETCH_ASSOC);
+$caminhoFoto = $stmtCaminhoFoto->fetchColumn();
 
 $TotalGastoFormatado = number_format($TotalGasto, 2 , ',', '.');
 
@@ -94,6 +100,8 @@ function formatarTempoPassado($data_criacao) {
         return 'Agora mesmo';
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -123,8 +131,14 @@ function formatarTempoPassado($data_criacao) {
         <div class="header">
             <a href="../../index.php">Voltar</a>
             <div class="profile-section">
-                <div class="profile-avatar"> <?= htmlspecialchars(substr($_SESSION['usuario']['nome'], 0, 2)) ?></div>
-                <div class="profile-info">
+                <div class="profile-avatar">
+                    <?php if($caminhoFoto):?>
+                    <img src="<?=htmlspecialchars($caminho_foto);?>" alt="">
+                    <?php else:?>
+                    <?= htmlspecialchars(strtoupper(substr($_SESSION['usuario']['nome'] ?? '' , 0, 2)));?>
+                    <?php endif;?>
+                </div>
+                <div class=" profile-info">
                     <h1><?= htmlspecialchars($_SESSION['usuario']['nome'])?></h1>
                     <p><?= htmlspecialchars($_SESSION['usuario']['email'])?></p>
                     <p><?= htmlspecialchars($_SESSION['usuario']['numero'])?></p>
@@ -219,7 +233,8 @@ function formatarTempoPassado($data_criacao) {
                                         <?= htmlspecialchars($comentario['nome_autor']) ?></strong>
                                     <p><?= nl2br(htmlspecialchars($comentario['titulo_comentario'])) ?></p>
                                     <p><?= nl2br(htmlspecialchars($comentario['comentario'])) ?></p>
-                                    <small>Criado em: <?= formatarTempoPassado($comentario['data_criacao']) ?></small>
+                                    <small>Criado em:
+                                        <?= formatarTempoPassado($comentario['data_criacao']) ?></small>
                                 </div>
                                 <hr>
                                 <?php endforeach; ?>
@@ -273,8 +288,10 @@ function formatarTempoPassado($data_criacao) {
                         <div class="activity-item">
                             <div class="activity-icon">✅</div>
                             <div class="activity-content">
-                                <div class="activity-title"><?= htmlspecialchars($titulo['titulo_comentario']) ?></div>
-                                <div class="activity-time"><?= formatarTempoPassado($titulo['data_criacao']) ?></div>
+                                <div class="activity-title"><?= htmlspecialchars($titulo['titulo_comentario']) ?>
+                                </div>
+                                <div class="activity-time"><?= formatarTempoPassado($titulo['data_criacao']) ?>
+                                </div>
                             </div>
                         </div>
                         <?php endforeach?>

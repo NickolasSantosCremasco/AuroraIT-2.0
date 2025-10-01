@@ -7,23 +7,19 @@ function registrarUsuario($dados) {
     // Extrai e limpa os dados do array
     $nome = trim($dados['nome'] ?? '');
     $email = trim($dados['email'] ?? '');
-    $senha = $dados['senha'] ?? '';
+    $senha_hash_final = $dados['senha'] ?? '';
     $cpf = $dados['cpf'] ?? null;
     $rg = $dados['rg'] ?? null;
     $genero = $dados['genero'] ?? null;
     $numero = $dados['numero'] ?? null;
     $caminho_foto = $dados['caminho_foto'] ?? null;
 
-    if (empty($nome) || empty($email) || empty($senha)) {
+    if (empty($nome) || empty($email) || empty($senha_hash_final)) {
         return ['sucesso' => false, 'message' => 'Nome, e-mail e senha são obrigatórios.'];
     }
     
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return ['sucesso' => false, 'message' => 'Formato de e-mail inválido!'];
-    }
-
-    if (strlen($senha) < 6) {
-        return ['sucesso' => false, 'message' => 'A senha deve ter no mínimo 6 caracteres.'];
     }
 
     // --- VERIFICAÇÃO DE E-MAIL DUPLICADO ---
@@ -37,8 +33,6 @@ function registrarUsuario($dados) {
 
     // --- PREPARAÇÃO E INSERÇÃO NO BANCO ---
     try {
-
-        $senhaHash = password_hash($senha, PASSWORD_BCRYPT);
         $sql = 'INSERT INTO usuarios (nome, email, numero, senha, cpf, rg, genero, caminho_foto) 
                 VALUES (:nome, :email, :numero, :senha, :cpf, :rg, :genero, :caminho_foto)';
                 
@@ -47,7 +41,7 @@ function registrarUsuario($dados) {
             ':nome' => $nome,
             ':email' => $email,
             ':numero' => $numero,
-            ':senha' => $senhaHash, 
+            ':senha' => $senha_hash_final, 
             ':cpf' => $cpf,
             ':rg' => $rg,
             ':genero' => $genero,
