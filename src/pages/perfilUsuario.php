@@ -118,6 +118,41 @@ function formatarTempoPassado($data_criacao) {
 .comentario-oculto {
     display: none;
 }
+
+.profile-avatar {
+    /* Baseado na sua captura de tela: ~120px de diâmetro */
+    width: 120px;
+    height: 120px;
+
+    /* Faz o círculo e garante que nada saia dele */
+    border-radius: 50%;
+    overflow: hidden;
+
+    /* Centraliza o conteúdo (seja a imagem ou o texto de iniciais) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Estilos para o fallback de INICIAIS */
+    background: linear-gradient(135deg, #00C9B1, #00B1A7);
+    /* Exemplo de cor de fundo */
+    color: white;
+    font-size: 40px;
+    /* Tamanho do texto das iniciais */
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+/* Estilo para a Imagem Dentro do Avatar */
+.profile-avatar img {
+    /* Garante que a imagem preencha TODO o contêiner */
+    width: 100%;
+    height: 100%;
+
+    /* Corta e dimensiona a imagem para caber sem distorcer */
+    object-fit: cover;
+}
 </style>
 
 <body>
@@ -133,7 +168,7 @@ function formatarTempoPassado($data_criacao) {
             <div class="profile-section">
                 <div class="profile-avatar">
                     <?php if($caminhoFoto):?>
-                    <img src="<?=htmlspecialchars($caminho_foto);?>" alt="">
+                    <img src="<?=htmlspecialchars($caminhoFoto);?>" alt="Foto de Perfil">
                     <?php else:?>
                     <?= htmlspecialchars(strtoupper(substr($_SESSION['usuario']['nome'] ?? '' , 0, 2)));?>
                     <?php endif;?>
