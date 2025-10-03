@@ -32,8 +32,7 @@ if ($nivel == 1) {
     $totalServicosPendentes = $stmtServicosPendentes->fetchColumn();
 
     // Consulta para pegar o valor total dos serviços concluídos
-    $stmtDinheiroConcluidos = $pdo->prepare('
-    SELECT SUM(ts.valor) AS total_dinheiro FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.status = "Concluído"');
+    $stmtDinheiroConcluidos = $pdo->prepare('SELECT SUM(ts.valor) AS total_dinheiro FROM servico s JOIN tipos_servico ts ON s.tipo_servico_id = ts.id WHERE s.status = "Concluído"');
     $stmtDinheiroConcluidos->execute();
     $totalDinheiroConcluidos = $stmtDinheiroConcluidos->fetchColumn();
 }
@@ -63,10 +62,6 @@ if ($nivel == 1) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>Aurorability | Perfil</title>
-
-    <style>
-
-    </style>
 </head>
 
 <!-- Modal para Agendar Consulta -->

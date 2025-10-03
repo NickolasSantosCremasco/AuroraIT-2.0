@@ -1,6 +1,16 @@
 <?php
 require_once 'src/database/config.php';
 require_once 'src/database/auth.php';
+
+$usuario_id = $_SESSION['usuario']['id'];
+
+$stmtCaminhoFoto = $pdo->prepare('SELECT caminho_foto FROM usuarios WHERE id = :usuario_id');
+$stmtCaminhoFoto->execute([
+    ':usuario_id' => $usuario_id
+]);
+
+$caminhoFoto = $stmtCaminhoFoto->fetchColumn();
+$fotoPerfil = !empty($caminhoFoto) ? $caminhoFoto : 'src/img/icono-usuario_126283-435.avif';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -89,9 +99,8 @@ require_once 'src/database/auth.php';
                                 <div class="d-none d-lg-flex align-items-center ms-4">
                                     <a href="src/pages/perfilUsuario.php"
                                         class="perfil d-flex align-items-center text-decoration-none">
-                                        <img src="src/img/icono-usuario_126283-435.avif"
-                                            class="border rounded-circle me-2" alt="Usuário"
-                                            style="width: 40px; height: 40px;">
+                                        <img src="<?php echo $fotoPerfil; ?>" class="border rounded-circle me-2"
+                                            alt="Usuário" style="width: 40px; height: 40px;">
                                         <span
                                             class="fw-bold text-white"><?php echo ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]) ?></span>
                                     </a>
@@ -101,9 +110,8 @@ require_once 'src/database/auth.php';
                                 <div class="d-none d-lg-flex align-items-center ms-4">
                                     <a href="src/pages/perfil.php"
                                         class="perfil d-flex align-items-center text-decoration-none">
-                                        <img src="src/img/icono-usuario_126283-435.avif"
-                                            class="border rounded-circle me-2" alt="Usuário"
-                                            style="width: 40px; height: 40px;">
+                                        <img src="<?php echo $fotoPerfil; ?>" class="border rounded-circle me-2"
+                                            alt="Usuário" style="width: 40px; height: 40px;">
                                         <span
                                             class="fw-bold text-white"><?php echo ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]) ?></span>
                                     </a>
