@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->CharSet = 'UTF-8';
 
             // Destinatários e Remetente
-            $mail->setFrom($email, $fullname); 
+            $mail->setFrom($_ENV['SMTP_USERNAME'], 'Formulário AuroraIT'); 
             $mail->addAddress($_ENV['SMTP_USERNAME'], 'AuroraIT'); 
             $mail->addReplyTo($email, $fullname); 
 

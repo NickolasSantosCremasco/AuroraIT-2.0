@@ -51,7 +51,6 @@
     // Simulação de cliques (para demonstração)
     document.querySelectorAll('.btn, .action-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
 
             // Efeito de ripple
             const ripple = document.createElement('div');
@@ -114,3 +113,5 @@
         });
 
     });
+
+    

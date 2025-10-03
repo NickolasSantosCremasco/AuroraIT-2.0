@@ -309,9 +309,9 @@ function formatarTempoPassado($data_criacao) {
                             <span>➕</span> Novo Projeto
                         </a>
 
-                        <a href="#" class="action-btn"
+                        <a href="../database/exportar_servicos.php" class="action-btn"
                             style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                            <span>📊</span> Importar CSV
+                            <span>📊</span> Exportar CSV
                         </a>
                     </div>
                 </div>
@@ -338,7 +338,7 @@ function formatarTempoPassado($data_criacao) {
         </div>
     </div>
 
-    <script src="../js/perfilUsuario.js">
+    <script src="../js/perfilUsuarios.js">
     </script>
     <script>
 
