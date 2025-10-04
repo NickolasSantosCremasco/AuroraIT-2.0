@@ -1,10 +1,9 @@
 <?php
-// 🟢 1. INICIA A SESSÃO (Essencial para manter o PDO e autenticação se for necessário)
-session_start();
 
-// Caminhos ajustados: assumindo que este arquivo está em /src/pages/
-require __DIR__ . '/../database/config.php'; 
-require __DIR__ . '/../database/vendor/autoload.php'; 
+require_once '../database/config.php'; 
+require_once '../database/vendor/autoload.php'; 
+require_once '../database/auth.php'; 
+
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../'); 
 $dotenv->load(); 
@@ -84,14 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->setFrom($_ENV['SMTP_USERNAME'], 'Aurora IT Suporte'); // Use um nome mais formal
         $mail->addAddress($email);
 
-        // 🟢 Montagem CORRETA do link de redefinição (mais dinâmico)
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        // 🟢 CORREÇÃO CRÍTICA DO LINK: Usa dirname() para garantir o caminho correto da pasta.
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://";
         $dominio = $_SERVER['HTTP_HOST'];
-        
-        // 🛑 CORRIGIDO: O destino do link é a página de reset real (provavelmente 'reset_senha.php' ou a mesma 'esqueci.php' com o token)
-        // Se a página que recebe o token é a "reset_senha.php", ajuste o caminho abaixo.
-        $caminho_base = str_replace('esqueci_senha.php', 'reset_senha.php', $_SERVER['PHP_SELF']); 
-        $linkRedefinicao = "{$protocol}{$dominio}{$caminho_base}?token=$token";
+
+        $caminho_diretorio = dirname($_SERVER['PHP_SELF']); 
+
+        // Monta o link para o arquivo resetSenha.php na mesma pasta
+        $linkRedefinicao = "{$protocol}{$dominio}{$caminho_diretorio}/resetSenha.php?token={$token}";
+
 
         // Conteúdo do E-mail
         $mail->isHTML(true);
@@ -131,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <link rel="stylesheet" href="../css/css-pages/login.css">
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="../img/favicon/favicon.png" type="image/x-icon">
 </head>
 
 <body>
