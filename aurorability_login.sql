@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/10/2025 às 01:41
+-- Tempo de geração: 04/10/2025 às 22:17
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -106,19 +106,21 @@ CREATE TABLE `usuarios` (
   `rg` varchar(20) NOT NULL,
   `genero` varchar(50) NOT NULL,
   `numero` varchar(15) NOT NULL,
-  `caminho_foto` varchar(255) DEFAULT NULL
+  `caminho_foto` varchar(255) DEFAULT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `token_expira` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `nivel`, `data_criacao`, `cpf`, `rg`, `genero`, `numero`, `caminho_foto`) VALUES
-(2, 'Nick', 'nickolascremasco@gmail.com', '$2y$10$cYZR4o0QG.gwlLLK6TwmF.68tSut4dyZyOMgvxdpUGIvsjBO6yaAe', 1, '2025-06-29', '', '', '', '', NULL),
-(4, 'Nayara', 'nay@gmail.com', '$2y$12$h.mll7/3FcUzdEEKRCVZ7.YYq.t6TGplLZEU.ns0zeJEIhbbvGBEa', 0, '2025-08-19', '', '', '', '', NULL),
-(6, 'Alexandra Sarandy', 'alexandra@gmail.com', '$2y$10$Qv.s5PD7TDAsDLnCrpjnmeGjjHWEnYOa/x50FbdohqkBC/JtYO5Z6', 0, '2025-09-01', '445.238.438-21', '55.235.435', 'masculino', '', '../img/uploads/68b63c556cf2a-usuarioGenerico.jpg'),
-(9, 'teste', 'teste@gmail.com', '$2y$10$5TPGdJli8ITIUydfwR2oo.oOzTfikOKVR5r0HZC7wl21gAqYvpuKq', 0, '2025-09-05', '453.453.453-45', '43-534.534', 'masculino', '', NULL),
-(14, 'testeF', 'testandoF@gmail.com', '$2y$10$M8Z2LHfPz0./88dRXx7rFOSuwaVzLsmYa/VlZih9oVRRWwcZoNI6.', 0, '2025-10-01', '445.238.438-21', '55-235.435', 'masculino', '(21) 97455-', '../img/uploads/68ddbb56940a2-4161d2c1db40f36f4c258e6b5561c0ee.jpg');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `nivel`, `data_criacao`, `cpf`, `rg`, `genero`, `numero`, `caminho_foto`, `token`, `token_expira`) VALUES
+(2, 'Nickolas', 'nickolascremasco@gmail.com', '$2y$10$.obdvEXvlajWCeuk4Nu0OOdCDFdFAqwJrBQfDtXEu5Xl.dLWTqIbO', 1, '2025-06-29', '', '', '', '', NULL, NULL, NULL),
+(4, 'Nayara', 'nay@gmail.com', '$2y$12$h.mll7/3FcUzdEEKRCVZ7.YYq.t6TGplLZEU.ns0zeJEIhbbvGBEa', 0, '2025-08-19', '', '', '', '', NULL, NULL, NULL),
+(6, 'Alexandra Sarandy', 'alexandra@gmail.com', '$2y$10$Qv.s5PD7TDAsDLnCrpjnmeGjjHWEnYOa/x50FbdohqkBC/JtYO5Z6', 0, '2025-09-01', '445.238.438-21', '55.235.435', 'masculino', '', '../img/uploads/68b63c556cf2a-usuarioGenerico.jpg', NULL, NULL),
+(9, 'teste', 'teste@gmail.com', '$2y$10$5TPGdJli8ITIUydfwR2oo.oOzTfikOKVR5r0HZC7wl21gAqYvpuKq', 0, '2025-09-05', '453.453.453-45', '43-534.534', 'masculino', '', NULL, NULL, NULL),
+(14, 'testeF', 'testandoF@gmail.com', '$2y$10$M8Z2LHfPz0./88dRXx7rFOSuwaVzLsmYa/VlZih9oVRRWwcZoNI6.', 0, '2025-10-01', '445.238.438-21', '55-235.435', 'masculino', '(21) 97455-', '../img/uploads/68ddbb56940a2-4161d2c1db40f36f4c258e6b5561c0ee.jpg', NULL, NULL);
 
 --
 -- Índices para tabelas despejadas
