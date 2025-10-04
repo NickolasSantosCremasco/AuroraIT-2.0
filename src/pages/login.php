@@ -51,7 +51,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="checkbox" class="form-check-input" id="rememberMe">
                         <label class="form-check-label" for="rememberMe" style="color:#6c757d;">Me lembre</label>
                     </div>
-                    <a href="#" class="text-decoration-none" style="color:#00C9B1;">Esqueceu?</a>
+                    <a href="../pages/esqueci-senha.php" class="text-decoration-none"
+                        style="color:#00C9B1;">Esqueceu?</a>
 
                 </div>
                 <button type="submit" class="btn btn-login w-100" style="background: #00C9B1;">Entrar</button>

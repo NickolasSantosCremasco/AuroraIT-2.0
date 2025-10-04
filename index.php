@@ -2,15 +2,18 @@
 require_once 'src/database/config.php';
 require_once 'src/database/auth.php';
 
-$usuario_id = $_SESSION['usuario']['id'];
+if (estaLogado()) {
+    $usuario_id = $_SESSION['usuario']['id'];
 
-$stmtCaminhoFoto = $pdo->prepare('SELECT caminho_foto FROM usuarios WHERE id = :usuario_id');
-$stmtCaminhoFoto->execute([
-    ':usuario_id' => $usuario_id
-]);
+    $stmtCaminhoFoto = $pdo->prepare('SELECT caminho_foto FROM usuarios WHERE id = :usuario_id');
+    $stmtCaminhoFoto->execute([
+        ':usuario_id' => $usuario_id
+    ]);
 
-$caminhoFoto = $stmtCaminhoFoto->fetchColumn();
-$fotoPerfil = !empty($caminhoFoto) ? $caminhoFoto : 'src/img/icono-usuario_126283-435.avif';
+    $caminhoFoto = $stmtCaminhoFoto->fetchColumn();
+    $fotoPerfil = !empty($caminhoFoto) ? $caminhoFoto : 'src/img/icono-usuario_126283-435.avif';
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
