@@ -1,6 +1,23 @@
 <?php
 require_once '../database/config.php';
 require_once '../database/auth.php';
+
+if (estaLogado()) {
+     // Se o nível for 0 (cliente), link para perfilUsuario.php
+    if ($_SESSION['usuario']['nivel'] == 0) {
+        $link_perfil = '../pages/perfilUsuario.php';
+    } 
+    // Se o nível for 1 (admin), link para perfil.php
+    else if ($_SESSION['usuario']['nivel'] == 1) {
+        $link_perfil = '../pages/perfil.php';
+    }
+    // Se for outro nível ou indefinido, usa um link padrão seguro.
+    else {
+        $link_perfil = '../pages/perfil.php'; 
+    }
+
+    $primeiro_nome = ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]);
+}
 ?>
 
 <!DOCTYPE html>
