@@ -1,14 +1,11 @@
 /* navbar */
-  .navbar {
-    box-shadow: 0px 20px 20px rgba(36, 36, 36, 0.5);
-    background: #287697;
-  }
+ 
   
   .navbar-collapse .navbar-nav .nav-item a {
     position: relative;
-    right: -50px;
+    right: -10px;
     font-size: 1.2em;
-    margin: 30px;
+
   }
   .navbar-collapse .navbar-nav .nav-item a:hover {
     transition: 0.5s;

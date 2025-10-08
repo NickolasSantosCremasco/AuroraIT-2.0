@@ -12,6 +12,22 @@ if (estaLogado()) {
 
     $caminhoFoto = $stmtCaminhoFoto->fetchColumn();
     $fotoPerfil = !empty($caminhoFoto) ? $caminhoFoto : 'src/img/icono-usuario_126283-435.avif';
+    
+    // Se o nível for 0 (cliente), link para perfilUsuario.php
+    if ($_SESSION['usuario']['nivel'] == 0) {
+        $link_perfil = 'src/pages/perfilUsuario.php';
+    } 
+    // Se o nível for 1 (admin), link para perfil.php
+    else if ($_SESSION['usuario']['nivel'] == 1) {
+        $link_perfil = 'src/pages/perfil.php';
+    }
+    // Se for outro nível ou indefinido, usa um link padrão seguro.
+    else {
+        $link_perfil = 'src/pages/perfil.php'; 
+    }
+
+    $primeiro_nome = ucfirst(explode(' ', $_SESSION['usuario']['nome'])[0]);
+    
 }
 
 ?>
@@ -445,7 +461,7 @@ if (estaLogado()) {
                                 criar um ambiente digital inclusivo, deram origem à Aurorability, uma empresa que
                                 busca fazer a diferença na vida de todos os usuários.</p>
                             <div class="buttons mt-4">
-                                <a href="https://rebrand.ly/freelancer-ud" rel="nofollow"
+                                <a href="src/pages/empresa.php" rel="nofollow"
                                     class="main-btn-one wow fadeInUp me-2 mb-2" data-wow-duration="1.3s"
                                     data-wow-delay="1.4s">Saiba Mais</a>
                                 <a href="#servicos" rel="nofollow" class="main-btn-two wow fadeInUp mb-2"
