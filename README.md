@@ -1,0 +1,1 @@
+This is a project made as my final exam in my technical school. Here i had to learn how use Mysql, how to do Admin Panels, how to use docker to share with my friends, git and how to have a conversation with clients. 
